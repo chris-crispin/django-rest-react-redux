@@ -50,8 +50,6 @@ export const search = (searchTerm, page) => {
               const result = response.results
               const count = response.count
               dispatch(populateSearchResults(result, Math.floor(count / constants.PAGE_LIMIT) + 1, page))
-                // extract into client url builder (generating url based on searchterm)
-              searchTerm ? browserHistory.push(`/app/users/search/${searchTerm.replace(' ', '-')}/${page || 1}`) : browserHistory.push(`/app/users/search/${page || 1}`)
               dispatch(hideLoader())
             })
   }

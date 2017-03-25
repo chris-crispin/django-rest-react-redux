@@ -22,12 +22,15 @@ export class App extends React.Component {
   _onSubmit (e) {
     e.preventDefault()
     const searchTerm = this.state.searchTerm
-    this.props.search(searchTerm, 1)
+    this.props.search(searchTerm, 1).then(() => {
+      ClientUrlBuilder.searchUserView(searchTerm, 1)
+    })
   }
 
   componentWillReceiveProps (nextProps) {
     if (this.props.params.searchTerm !== nextProps.params.searchTerm) {
       this.setState({searchTerm: nextProps.params.searchTerm ? nextProps.params.searchTerm.replace('-', ' ') : ''})
+      this.props.search(nextProps.params.searchTerm, parseInt(this.props.params.page, 10))
     }
 
     if (this.props.params.page !== nextProps.params.page) {

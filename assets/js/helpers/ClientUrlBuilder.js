@@ -7,4 +7,13 @@ export default class ClientUrlBuilder {
     browserHistory.push(`/${BASE_URL}/${USER_MODEL}/entry/add`)
   }
 
+  static searchUserView (searchTerm, page) {
+    if (searchTerm) {
+      const decodedSearchTerm = searchTerm.replace(' ', '-')
+      browserHistory.push(`/${BASE_URL}/${USER_MODEL}/search/${decodedSearchTerm}/${page}`)
+    } else {
+      browserHistory.push(`/${BASE_URL}/${USER_MODEL}/search/${page}`)
+    }
+  }
+
 }
