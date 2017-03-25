@@ -1,10 +1,12 @@
+/* global localStorage */
 import request from 'superagent'
 import * as constants from '../actions/constants'
-/* global localStorage */
+import {USER_MODEL} from './RouterHelper'
+
 export default class ApiHelper {
 
   static search (searchTerm, page) {
-    const url = searchTerm ? `/users/?q=${searchTerm}&limit=${constants.PAGE_LIMIT}&offset=${constants.PAGE_LIMIT * (page - 1)}` : `/users?limit=${constants.PAGE_LIMIT}&offset=${constants.PAGE_LIMIT * (page - 1)}`
+    const url = searchTerm ? `/${USER_MODEL}/?q=${searchTerm}&limit=${constants.PAGE_LIMIT}&offset=${constants.PAGE_LIMIT * (page - 1)}` : `/${USER_MODEL}?limit=${constants.PAGE_LIMIT}&offset=${constants.PAGE_LIMIT * (page - 1)}`
     return new Promise((resolve) => {
       request
         .get(url)
@@ -21,7 +23,7 @@ export default class ApiHelper {
   }
 
   static lookup (id) {
-    const url = `/users/${id}`
+    const url = `/${USER_MODEL}/${id}`
     return new Promise((resolve) => {
       request
         .get(url)
@@ -38,7 +40,7 @@ export default class ApiHelper {
   }
 
   static delete (id) {
-    const url = `/users/${id}`
+    const url = `/${USER_MODEL}/${id}`
     return new Promise((resolve) => {
       request
         .delete(url)
@@ -55,7 +57,7 @@ export default class ApiHelper {
   }
 
   static put (id, username, state) {
-    const url = `/users/${id}/`
+    const url = `/${USER_MODEL}/${id}/`
     const payload = {
       id: id,
       first_name: state.firstName,
@@ -85,7 +87,7 @@ export default class ApiHelper {
   }
 
   static post (username, state) {
-    const url = '/users/'
+    const url = `/${USER_MODEL}/`
     const payload = {
       first_name: state.firstName,
       last_name: state.lastName,

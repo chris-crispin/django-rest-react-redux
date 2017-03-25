@@ -1,5 +1,4 @@
 /* global localStorage */
-
 import React from 'react'
 import './styles.scss'
 import FormGroup from 'react-bootstrap/lib/FormGroup'

@@ -45,7 +45,7 @@ export const search = (searchTerm, page) => {
   return function (dispatch) {
     dispatch(showLoader())
 
-    return ApiHelper.search(searchTerm, page)
+    return ApiHelper.search(searchTerm || '', page || 1)
             .then((response) => {
               const result = response.results
               const count = response.count
@@ -76,7 +76,6 @@ export const safeDelete = (id) => {
               dispatch(populateSearchResults([]))
               dispatch(hideLoader())
               dispatch(showInfoModal(result.msg))
-              browserHistory.push('/app/users')
             })
   }
 }

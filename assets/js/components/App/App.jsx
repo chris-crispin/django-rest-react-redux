@@ -32,9 +32,9 @@ export class App extends React.Component {
       this.setState({searchTerm: nextProps.params.searchTerm ? nextProps.params.searchTerm.replace('-', ' ') : ''})
       this.props.search(nextProps.params.searchTerm, parseInt(this.props.params.page, 10))
     }
-
     if (this.props.params.page !== nextProps.params.page) {
       this.setState({page: parseInt(nextProps.params.page, 10)})
+      this.props.search(this.props.params.searchTerm, parseInt(nextProps.params.page, 10))
     }
   }
 
