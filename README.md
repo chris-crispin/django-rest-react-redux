@@ -39,13 +39,15 @@ Postgres
 - enter psql console (in another terminal window/tab)
 
 ```psql postgres```
-- in the psql terminal, create a user and database:
+- in the psql terminal, create a user and database substituting the username, password and database name for whatever you choose:
 
 ```CREATE USER admin WITH PASSWORD 'pass123';```
 
 ```ALTER USER django CREATEDB;```
 
 ```CREATE DATABASE "EPLDB";```
+
+Ensure that you rename "secret_settings.py.template" to "secret_settings.py" and include the settings listed above (with your chosen username, password etc) as well as a secret key used by Django for hashing (you will find a number of generators online or you can create your own).
 
 Running
 =======
