@@ -1,0 +1,19 @@
+.header {
+  width: 100%;
+  height: calc(5vh);
+  .header__brand a {
+    text-decoration: none;
+    cursor: default;
+    color: grey;
+    &:hover {
+      color: grey;
+    }
+  }
+  .header__brand--span {
+    color: white;
+  }
+}
+
+.header__navbar {
+  z-index: 1;
+}

@@ -1,0 +1,23 @@
+html, body {
+  overflow: hidden;
+}
+
+.page {
+  background-color: #f9f9f9;
+  width: auto;
+  top: 0;
+}
+
+.page__page-container {
+  background-color: #f9f9f9;
+  margin: 0 auto;
+  width: 100%;
+  height: calc(95vh);
+  max-width: 1100px;
+}
+
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

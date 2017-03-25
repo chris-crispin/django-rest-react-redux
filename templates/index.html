@@ -1,0 +1,16 @@
+{% load render_bundle from webpack_loader %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>django-rest-react-redux</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,600" rel="stylesheet">
+    <link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
+  </head>
+  <body>
+    <div id="container"></div>
+      {% render_bundle 'epl' %}
+  </body>
+</html>

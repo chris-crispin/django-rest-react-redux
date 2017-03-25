@@ -1,0 +1,5 @@
+--compilers css:test/mocha.css.js,js:babel-core/register
+--require test/mocha.conf.js
+assets/js/test/*.spec.js
+--recursive
+--reporter nyan

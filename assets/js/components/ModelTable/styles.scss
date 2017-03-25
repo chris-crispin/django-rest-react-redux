@@ -1,0 +1,14 @@
+.table {
+  font-family: Lato;
+  margin: 0 2% 0 2%;
+  width: 96%;
+  height: auto;
+  .table__body {
+    width: 100%;
+    height: calc(65vh);
+    overflow-y: auto;
+  }
+  th, td, tr {
+    width: 20%;
+  }
+}

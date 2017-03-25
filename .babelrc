@@ -1,0 +1,4 @@
+{
+  "presets": [["es2015", {"modules": false, "loose": true}], "react", "stage-0", "airbnb"],
+  "plugins": ["transform-es2015-destructuring", "transform-object-rest-spread"]
+}
