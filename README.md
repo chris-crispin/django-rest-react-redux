@@ -113,4 +113,4 @@ Useful Endpoints
 
 - [API root](http://localhost:8000)
 - [Admin](http://localhost:8000/admin)
-- [UI](http://localhost:8000/epl)
+- [UI](http://localhost:8000/app)

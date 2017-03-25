@@ -10,7 +10,7 @@ module.exports = {
   // your current directory. You don't have to specify the extension  now,
   // because you will specify extensions later in the `resolve` section
   entry: {
-    epl: './assets/js/router'
+    app: './assets/js/router'
   },
 
   output: {
