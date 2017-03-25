@@ -1,6 +1,3 @@
-/**
- * Created by crispinc on 22/12/2016.
- */
  /* global localStorage */
 import request from 'superagent'
 import cookie from 'react-cookie'

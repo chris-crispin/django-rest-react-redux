@@ -1,6 +1,3 @@
-/**
- * Created by crispinc on 22/12/2016.
- */
 import React from 'react'
 import Pagination from 'react-bootstrap/lib/Pagination'
 import ConnectedHeader from '../../containers/ConnectedHeader'

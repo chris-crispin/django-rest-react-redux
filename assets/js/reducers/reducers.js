@@ -1,8 +1,3 @@
-/**
- * Created by crispinc on 23/12/2016.
- */
-// needs splitting into multiple reducers and combining in index.js
-
 import * as constants from '../actions/constants'
 
 export default (state, action) => {
