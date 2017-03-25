@@ -3,9 +3,12 @@ import './styles.scss'
 import Table from 'react-bootstrap/lib/Table'
 import TableRow from '../TableRow/TableRow'
 import Spinner from '../Spinner/Spinner'
+import Pagination from 'react-bootstrap/lib/Pagination'
+import AppHandlerHelper from '../../helpers/AppHandlerHelper'
 
-const ModelTable = ({ids, headers, entries, onRowClick, displayLoader}) => {
-  const headings = headers.map(heading => <th key={heading}>{heading}</th>)
+const ModelTable = ({ids, entries, displayLoader, pages, page, lookup}) => {
+  const headings = ['Name', 'User', 'Email', 'Active', 'Staff',
+    'Superuser'].map(heading => <th key={heading}>{heading}</th>)
 
   let tableRows = []
   if (entries) {
@@ -14,28 +17,44 @@ const ModelTable = ({ids, headers, entries, onRowClick, displayLoader}) => {
         key={ids[i]}
         id={ids[i]}
         cells={entry}
-        handleClick={onRowClick} />
+        handleClick={() => AppHandlerHelper.handleClick(ids[i], lookup)} />
     )
   }
 
   return (
-    <div className='table'>
-      {displayLoader &&
-        <Spinner />
-      }
-      <Table striped hover responsive condensed>
-        <thead>
-          <tr>
-            {headings}
-          </tr>
-        </thead>
-      </Table>
-      <div className='table__body'>
-        <Table striped condensed responsive hover>
-          <tbody>
-            {tableRows}
-          </tbody>
+    <div>
+      <div className='table'>
+        {displayLoader &&
+          <Spinner />
+        }
+        <Table striped hover responsive condensed>
+          <thead>
+            <tr>
+              {headings}
+            </tr>
+          </thead>
         </Table>
+        <div className='table__body'>
+          <Table striped condensed responsive hover>
+            <tbody>
+              {tableRows}
+            </tbody>
+          </Table>
+        </div>
+      </div>
+      <div className='pagination-container'>
+        <Pagination
+          prev
+          next
+          first
+          last
+          ellipsis
+          boundaryLinks
+          items={pages}
+          maxButtons={5}
+          activePage={page}
+          onSelect={() => {}}
+        />
       </div>
     </div>
   )
@@ -43,10 +62,11 @@ const ModelTable = ({ids, headers, entries, onRowClick, displayLoader}) => {
 
 ModelTable.propTypes = {
   ids: React.PropTypes.array.isRequired,
-  headers: React.PropTypes.array.isRequired,
-  entries: React.PropTypes.array,
-  onRowClick: React.PropTypes.func.isRequired,
-  displayLoader: React.PropTypes.bool.isRequired
+  entries: React.PropTypes.array.isRequired,
+  displayLoader: React.PropTypes.bool.isRequired,
+  pages: React.PropTypes.number.isRequired,
+  page: React.PropTypes.number.isRequired,
+  lookup: React.PropTypes.func.isRequired
 }
 
 export default ModelTable

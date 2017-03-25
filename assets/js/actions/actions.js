@@ -34,30 +34,11 @@ export const hideLoader = () => ({
   type: constants.HIDE_LOADER
 })
 
-export const editView = () => ({
-  type: constants.EDIT_VIEW
-})
-
-export const tableView = () => ({
-  type: constants.TABLE_VIEW
-})
-
 export const populateSearchResults = (result, pages, page) => {
   return ({
     type: constants.POPULATE,
     payload: { result: result, pages: pages, page: page }
   })
-}
-
-export const addView = () => ({
-  type: constants.ADD_VIEW
-})
-
-export const goToAddView = () => {
-  return function (dispatch) {
-    dispatch(addView())
-    browserHistory.push('/users/entry/add')
-  }
 }
 
 export const search = (searchTerm, page) => {
@@ -69,10 +50,8 @@ export const search = (searchTerm, page) => {
               const result = response.results
               const count = response.count
               dispatch(populateSearchResults(result, Math.floor(count / constants.PAGE_LIMIT) + 1, page))
-              dispatch(tableView())
-
                 // extract into client url builder (generating url based on searchterm)
-              searchTerm ? browserHistory.push(`/users/search/${searchTerm.replace(' ', '-')}/${page || 1}`) : browserHistory.push(`/users/search/${page || 1}`)
+              searchTerm ? browserHistory.push(`/app/users/search/${searchTerm.replace(' ', '-')}/${page || 1}`) : browserHistory.push(`/app/users/search/${page || 1}`)
               dispatch(hideLoader())
             })
   }
@@ -85,7 +64,6 @@ export const lookup = (id) => {
     return ApiHelper.lookup(id)
             .then((result) => {
               dispatch(populateSearchResults([result]))
-              dispatch(editView())
               dispatch(hideLoader())
             })
   }
@@ -97,11 +75,10 @@ export const safeDelete = (id) => {
 
     return ApiHelper.delete(id)
             .then((result) => {
-              dispatch(tableView())
               dispatch(populateSearchResults([]))
               dispatch(hideLoader())
               dispatch(showInfoModal(result.msg))
-              browserHistory.push('/users')
+              browserHistory.push('/app/users')
             })
   }
 }
@@ -114,7 +91,7 @@ export const put = (id, firstName, lastName, user, email, username) => {
             .then((result) => {
               dispatch(populateSearchResults([result]))
               dispatch(hideLoader())
-              browserHistory.push(`/users/entry/${id}`)
+              browserHistory.push(`/app/users/entry/${id}`)
             })
   }
 }
@@ -126,10 +103,9 @@ export const post = (firstName, lastName, user, email, username) => {
     return ApiHelper.post(firstName, lastName, user, email, username)
             .then((result) => {
               dispatch(populateSearchResults([result]))
-              dispatch(editView())
               dispatch(hideLoader())
               const id = result.id
-              browserHistory.push(`/users/entry/${id}`)
+              browserHistory.push(`/app/users/entry/${id}`)
             })
   }
 }

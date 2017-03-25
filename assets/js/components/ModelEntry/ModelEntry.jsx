@@ -11,6 +11,7 @@ import Breadcrumb from 'react-bootstrap/lib/Breadcrumb'
 import ControlLabel from 'react-bootstrap/lib/ControlLabel'
 import Label from 'react-bootstrap/lib/Label'
 import Spinner from '../Spinner/Spinner'
+import AppHandlerHelper from '../../helpers/AppHandlerHelper'
 
 export class ModelEntry extends React.Component {
 
@@ -27,14 +28,16 @@ export class ModelEntry extends React.Component {
     }
   }
 
-  componentWillUpdate (nextProps) {
-    this.props.user !== nextProps.user ? this.setState({'user': nextProps.user}) : null
-    this.props.email !== nextProps.email ? this.setState({'email': nextProps.email}) : null
-    this.props.firstName !== nextProps.firstName ? this.setState({'firstName': nextProps.firstName}) : null
-    this.props.lastName !== nextProps.lastName ? this.setState({'lastName': nextProps.lastName}) : null
-    this.props.isActive !== nextProps.isActive ? this.setState({'isActive': nextProps.isActive}) : null
-    this.props.isStaff !== nextProps.isStaff ? this.setState({'isStaff': nextProps.isStaff}) : null
-    this.props.isSuper !== nextProps.isSuper ? this.setState({'isSuper': nextProps.isSuper}) : null
+  componentWillReceiveProps (nextProps) {
+    if (this.props.user !== nextProps.user) {
+      this.setState({'user': nextProps.user,
+        'email': nextProps.email,
+        'firstName': nextProps.firstName,
+        'lastName': nextProps.lastName,
+        'isActive': nextProps.isActive,
+        'isStaff': nextProps.isStaff,
+        'isSuper': nextProps.isSuper})
+    }
   }
 
   _onChangeHandler (e, field) {
@@ -50,7 +53,7 @@ export class ModelEntry extends React.Component {
       e.preventDefault()
     }
     if (this.validateForm()) {
-      const username = this.props.username || localStorage.user
+      const username = localStorage.user
       if (this.props.id) {
         this.props.put(this.props.id, username, this.state)
       } else {
@@ -93,7 +96,7 @@ export class ModelEntry extends React.Component {
     return (
       <div className='entry-container'>
         <Breadcrumb className='entry-container__breadcrumb'>
-          <Breadcrumb.Item onClick={this.props.backFn}>
+          <Breadcrumb.Item onClick={(e) => AppHandlerHelper.clearSearch(e, this.props.search)}>
             Home
           </Breadcrumb.Item>
           <Breadcrumb.Item active>
@@ -106,85 +109,86 @@ export class ModelEntry extends React.Component {
           { this.props.displayLoader &&
             <Spinner />
           }
-          <Form onSubmit={this._onSubmit.bind(this)} className='entry-container__form-container--form'>
-            <Col xs={6} sm={4}>
-              <FormGroup className='z' bsSize='large' validationState={this.validateName()}>
-                <ControlLabel>First Name</ControlLabel>
-                <FormControl
-                  type='text'
-                  value={this.state.firstName}
-                  onChange={(e) => this._onChangeHandler(e, 'firstName')} />
-                <FormControl.Feedback />
-              </FormGroup>
-            </Col>
-            <Col xs={6} sm={4}>
-              <FormGroup bsSize='large' validationState={this.validateName()}>
-                <ControlLabel>Surname</ControlLabel>
-                <FormControl
-                  type='text'
-                  value={this.state.lastName}
-                  onChange={(e) => this._onChangeHandler(e, 'lastName')} />
-                <FormControl.Feedback />
-              </FormGroup>
-            </Col>
-            <Col xs={6} sm={4}>
-              <FormGroup bsSize='large'>
-                <ControlLabel>Permissions</ControlLabel>
-                <br />
-                <Checkbox
-                  checked={this.state.isActive}
-                  onChange={(e) => this._onChangeHandler(e, 'isActive')}
-                  inline>Active</Checkbox>
-                <Checkbox
-                  checked={this.state.isStaff}
-                  onChange={(e) => this._onChangeHandler(e, 'isStaff')}
-                  inline>Staff</Checkbox>
-                <Checkbox
-                  checked={this.state.isSuper}
-                  onChange={(e) => this._onChangeHandler(e, 'isSuper')}
-                  inline>Superuser</Checkbox>
-              </FormGroup>
-            </Col>
-            <Col xs={12} sm={8}>
-              <FormGroup bsSize='large' validationState={this.validateUsername()}>
-                <ControlLabel>Username</ControlLabel>
-                <FormControl
-                  type='text'
-                  value={this.state.user}
-                  onChange={(e) => this._onChangeHandler(e, 'user')} />
-                <FormControl.Feedback />
-              </FormGroup>
-            </Col>
-            <Col xs={12} sm={8}>
-              <FormGroup bsSize='large' validationState={this.validateEmail()}>
-                <ControlLabel>Email</ControlLabel>
-                <FormControl
-                  type='text'
-                  value={this.state.email}
-                  onChange={(e) => this._onChangeHandler(e, 'email')} />
-                <FormControl.Feedback />
-              </FormGroup>
-            </Col>
-            <Col xs={12} sm={8}>
-              {this.validateForm()
-              ? <button
-                className='active--button'
-                type='submit'>
-                Submit
-              </button>
-              : <button
-                className='idle--button'
-                type='submit'>
-                Submit
-              </button> }
-              {this.props.id &&
-              <button
-                className='delete--button'
-                onClick={() => this.props.safeDelete(this.props.id)}>
-                Delete
-              </button>}
-            </Col>
-          </Form>
+          { (!this.props.displayLoader) &&
+            <Form onSubmit={this._onSubmit.bind(this)} className='entry-container__form-container--form'>
+              <Col xs={6} sm={4}>
+                <FormGroup className='z' bsSize='large' validationState={this.validateName()}>
+                  <ControlLabel>First Name</ControlLabel>
+                  <FormControl
+                    type='text'
+                    value={this.state.firstName}
+                    onChange={(e) => this._onChangeHandler(e, 'firstName')} />
+                  <FormControl.Feedback />
+                </FormGroup>
+              </Col>
+              <Col xs={6} sm={4}>
+                <FormGroup bsSize='large' validationState={this.validateName()}>
+                  <ControlLabel>Surname</ControlLabel>
+                  <FormControl
+                    type='text'
+                    value={this.state.lastName}
+                    onChange={(e) => this._onChangeHandler(e, 'lastName')} />
+                  <FormControl.Feedback />
+                </FormGroup>
+              </Col>
+              <Col xs={6} sm={4}>
+                <FormGroup bsSize='large'>
+                  <ControlLabel>Permissions</ControlLabel>
+                  <br />
+                  <Checkbox
+                    checked={this.state.isActive}
+                    onChange={(e) => this._onChangeHandler(e, 'isActive')}
+                    inline>Active</Checkbox>
+                  <Checkbox
+                    checked={this.state.isStaff}
+                    onChange={(e) => this._onChangeHandler(e, 'isStaff')}
+                    inline>Staff</Checkbox>
+                  <Checkbox
+                    checked={this.state.isSuper}
+                    onChange={(e) => this._onChangeHandler(e, 'isSuper')}
+                    inline>Superuser</Checkbox>
+                </FormGroup>
+              </Col>
+              <Col xs={12} sm={8}>
+                <FormGroup bsSize='large' validationState={this.validateUsername()}>
+                  <ControlLabel>Username</ControlLabel>
+                  <FormControl
+                    type='text'
+                    value={this.state.user}
+                    onChange={(e) => this._onChangeHandler(e, 'user')} />
+                  <FormControl.Feedback />
+                </FormGroup>
+              </Col>
+              <Col xs={12} sm={8}>
+                <FormGroup bsSize='large' validationState={this.validateEmail()}>
+                  <ControlLabel>Email</ControlLabel>
+                  <FormControl
+                    type='text'
+                    value={this.state.email}
+                    onChange={(e) => this._onChangeHandler(e, 'email')} />
+                  <FormControl.Feedback />
+                </FormGroup>
+              </Col>
+              <Col xs={12} sm={8}>
+                {this.validateForm()
+                ? <button
+                  className='active--button'
+                  type='submit'>
+                  Submit
+                </button>
+                : <button
+                  className='idle--button'
+                  type='submit'>
+                  Submit
+                </button> }
+                {this.props.id &&
+                <button
+                  className='delete--button'
+                  onClick={() => this.props.safeDelete(this.props.id)}>
+                  Delete
+                </button> }
+              </Col>
+            </Form>}
         </div>
       </div>
     )
@@ -200,7 +204,6 @@ ModelEntry.propTypes = {
   isStaff: React.PropTypes.bool.isRequired,
   isSuper: React.PropTypes.bool.isRequired,
   id: React.PropTypes.number,
-  backFn: React.PropTypes.func.isRequired,
   displayLoader: React.PropTypes.bool.isRequired
 }
 

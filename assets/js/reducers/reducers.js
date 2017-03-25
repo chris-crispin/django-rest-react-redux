@@ -47,23 +47,6 @@ export default (state, action) => {
         page: action.payload.page
 
       }
-    case constants.EDIT_VIEW:
-      return {
-        ...state,
-        displayEditView: true,
-        displayAddView: false
-      }
-    case constants.TABLE_VIEW:
-      return {
-        ...state,
-        displayEditView: false,
-        displayAddView: false
-      }
-    case constants.ADD_VIEW:
-      return {
-        ...state,
-        displayAddView: true
-      }
     default:
       return state
   }

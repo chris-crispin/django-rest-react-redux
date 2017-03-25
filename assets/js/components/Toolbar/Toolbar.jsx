@@ -14,7 +14,7 @@ const Toolbar = ({onChange, onSubmit, clearSearch, searchTerm, goToAddView}) => 
           />
           <input
             type='text' placeholder='Search'
-            defaultValue={searchTerm}
+            value={searchTerm}
             onChange={onChange}
             className='text-input'
           />

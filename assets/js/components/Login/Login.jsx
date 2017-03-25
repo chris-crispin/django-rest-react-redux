@@ -35,7 +35,7 @@ export class Login extends React.Component {
       .then((loggedIn) => {
         if (loggedIn) {
           this.props.setUser(username)
-          browserHistory.replace('/users/search/1')
+          browserHistory.replace('/app/users/search/1')
         } else {
           this.setState({failedLogin: true})
         }

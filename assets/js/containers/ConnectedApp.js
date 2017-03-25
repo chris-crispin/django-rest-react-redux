@@ -6,11 +6,7 @@ function mapStateToProps (state, ownProps) {
   return {
     username: state.username,
     entries: state.entries,
-    id: ownProps.params.id,
-    searchTerm: ownProps.params.searchTerm,
-    displayEditView: state.displayEditView,
     displayLoader: state.displayLoader === undefined ? true : state.displayLoader,
-    displayAddView: state.displayAddView,
     displayModal: state.displayModal,
     displayInfoModal: state.displayInfoModal,
     pages: state.pages,
