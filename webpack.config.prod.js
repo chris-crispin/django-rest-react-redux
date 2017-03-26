@@ -1,8 +1,11 @@
 // require our dependencies
-var path = require('path')
-var webpack = require('webpack')
-var BundleTracker = require('webpack-bundle-tracker')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
+const path = require('path')
+const webpack = require('webpack')
+const BundleTracker = require('webpack-bundle-tracker')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CompressionPlugin = require('compression-webpack-plugin')
+const VERSION = require('./app-version-plugin').VERSION
 
 module.exports = {
     // the base directory (absolute path) for resolving the entry option
@@ -18,7 +21,7 @@ module.exports = {
         // where you want your compiled bundle to be stored
     path: path.resolve('./assets/static/bundles/'),
         // naming convention webpack should use for your files
-    filename: '[name]-[hash].js',
+    filename: `[name]-${VERSION}.js`,
     chunkFilename: '[name]-[chunkhash].js'
   },
 
@@ -48,6 +51,7 @@ module.exports = {
   },
 
   plugins: [
+    new HtmlWebpackPlugin({ title: 'Tree-shaking' }),
     new BundleTracker({filename: './webpack-stats.json'}),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
@@ -75,7 +79,14 @@ module.exports = {
       },
       comments: false
     }),
-    new ExtractTextPlugin('static/css/[name].[contenthash:8].css')
+    new ExtractTextPlugin('static/css/[name].[contenthash:8].css'),
+    new CompressionPlugin({
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: /\.js$/,
+      threshold: 10240,
+      minRatio: 0.8
+    })
          // new ManifestPlugin({
          //   fileName: 'asset-manifest.json'
          // })
