@@ -155,7 +155,7 @@ export class ModelEntry extends React.Component {
           { (!this.props.displayLoader) &&
             <Form onSubmit={this._onSubmit.bind(this)} className='entry-container__form-container--form'>
               <Col xs={6} sm={4}>
-                <FormGroup className='z' bsSize='sm' validationState={this.validateName()}>
+                <FormGroup bsSize='sm' validationState={this.validateName()}>
                   <ControlLabel>First Name</ControlLabel>
                   <FormControl
                     type='text'
