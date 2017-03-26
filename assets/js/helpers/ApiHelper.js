@@ -97,8 +97,10 @@ export default class ApiHelper {
       user_last_modified: username,
       is_active: state.isActive !== 'undefined' ? state.isActive : false,
       is_staff: state.isStaff !== 'undefined' ? state.isStaff : false,
-      is_superuser: state.isSuper !== 'undefined' ? state.isSuper : false
+      is_superuser: state.isSuper !== 'undefined' ? state.isSuper : false,
+      password: state.password
     }
+
     return new Promise((resolve) => {
       request
         .post(url)

@@ -57,6 +57,16 @@ button {
   padding: 1px 6px 1px 6px;
 }
 
-h2 {
+h4 {
   font-family: Lato;
+}
+
+.verbatim {
+  border: solid lightgrey 1px;
+  font-family: "Courier New", Courier, monospace;
+  color: inherit;
+}
+
+.form__info {
+  color: black;
 }

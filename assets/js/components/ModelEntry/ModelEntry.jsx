@@ -3,6 +3,7 @@ import React from 'react'
 import './styles.scss'
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 import FormControl from 'react-bootstrap/lib/FormControl'
+import HelpBlock from 'react-bootstrap/lib/HelpBlock'
 import Form from 'react-bootstrap/lib/Form'
 import Col from 'react-bootstrap/lib/Col'
 import Checkbox from 'react-bootstrap/lib/Checkbox'
@@ -18,6 +19,8 @@ export class ModelEntry extends React.Component {
     super(props, context)
     this.state = {
       user: this.props.user,
+      password: '',
+      confirmPassword: '',
       email: this.props.email,
       firstName: this.props.firstName,
       lastName: this.props.lastName,
@@ -67,6 +70,36 @@ export class ModelEntry extends React.Component {
     }
   }
 
+  validatePassword () {
+    const password = this.state.password
+    const upper = /[A-Z]/g
+    const numbers = /[0-9]/g
+    const specials = /[!#$%^&*+=_-]/g
+    const numberMatch = password.match(numbers)
+    const specialMatch = password.match(specials)
+    const upperMatch = password.match(upper)
+    const weak = password.length > 6 && specialMatch && specialMatch.length >= 1 &&
+    numberMatch && numberMatch.length >= 2 && upperMatch && upperMatch.length >= 1
+    const strong = password.length > 10 && specialMatch && specialMatch.length >= 2 &&
+    numberMatch && numberMatch.length >= 3 && upperMatch && upperMatch.length >= 2
+    if (strong) {
+      return 'success'
+    } else if (weak) {
+      return 'warning'
+    } else {
+      return 'error'
+    }
+  }
+
+  validateConfirmPassword () {
+    if (this.state.confirmPassword.length > 6 &&
+      this.state.confirmPassword === this.state.password) {
+      return 'success'
+    } else {
+      return 'error'
+    }
+  }
+
   validateName () {
     if (this.state.firstName.length > 1 && this.state.lastName.length > 1) {
       return 'success'
@@ -84,7 +117,9 @@ export class ModelEntry extends React.Component {
   }
 
   validateEmail () {
-    if (this.state.email.includes('@') && this.state.email.split('@')[1].includes('.')) {
+    if (this.state.email.includes('@') &&
+    this.state.email.split('@')[1].includes('.') &&
+    this.state.email.split('@')[1].split('.')[1].length >= 2) {
       return 'success'
     } else {
       return 'error'
@@ -94,7 +129,10 @@ export class ModelEntry extends React.Component {
   validateForm () {
     return this.validateUsername() === 'success' &&
     this.validateEmail() === 'success' &&
-    this.validateName() === 'success'
+    this.validateName() === 'success' &&
+    (this.props.params.id !== 'add' ||
+    (this.validatePassword() === 'success' || this.validatePassword() === 'warning') &&
+    this.validateConfirmPassword() === 'success')
   }
 
   render () {
@@ -108,7 +146,7 @@ export class ModelEntry extends React.Component {
             {this.props.id ? `User ${this.props.id}` : 'New User'}
           </Breadcrumb.Item>
         </Breadcrumb>
-        <h2> User <Label className='entry-container__overlay'> {this.props.id ? 'Edit' : 'Add'} </Label></h2>
+        <h4> User <Label className='entry-container__overlay'> {this.props.id ? 'Edit' : 'Add'} </Label></h4>
         <br />
         <div className='entry-container__form-container'>
           { this.props.displayLoader &&
@@ -117,17 +155,16 @@ export class ModelEntry extends React.Component {
           { (!this.props.displayLoader) &&
             <Form onSubmit={this._onSubmit.bind(this)} className='entry-container__form-container--form'>
               <Col xs={6} sm={4}>
-                <FormGroup className='z' bsSize='large' validationState={this.validateName()}>
+                <FormGroup className='z' bsSize='sm' validationState={this.validateName()}>
                   <ControlLabel>First Name</ControlLabel>
                   <FormControl
                     type='text'
                     value={this.state.firstName}
                     onChange={(e) => this._onChangeHandler(e, 'firstName')} />
-                  <FormControl.Feedback />
                 </FormGroup>
               </Col>
               <Col xs={6} sm={4}>
-                <FormGroup bsSize='large' validationState={this.validateName()}>
+                <FormGroup bsSize='sm' validationState={this.validateName()}>
                   <ControlLabel>Surname</ControlLabel>
                   <FormControl
                     type='text'
@@ -137,7 +174,7 @@ export class ModelEntry extends React.Component {
                 </FormGroup>
               </Col>
               <Col xs={6} sm={4}>
-                <FormGroup bsSize='large'>
+                <FormGroup bsSize='sm'>
                   <ControlLabel>Permissions</ControlLabel>
                   <br />
                   <Checkbox
@@ -155,17 +192,7 @@ export class ModelEntry extends React.Component {
                 </FormGroup>
               </Col>
               <Col xs={12} sm={8}>
-                <FormGroup bsSize='large' validationState={this.validateUsername()}>
-                  <ControlLabel>Username</ControlLabel>
-                  <FormControl
-                    type='text'
-                    value={this.state.user}
-                    onChange={(e) => this._onChangeHandler(e, 'user')} />
-                  <FormControl.Feedback />
-                </FormGroup>
-              </Col>
-              <Col xs={12} sm={8}>
-                <FormGroup bsSize='large' validationState={this.validateEmail()}>
+                <FormGroup bsSize='sm' validationState={this.validateEmail()}>
                   <ControlLabel>Email</ControlLabel>
                   <FormControl
                     type='text'
@@ -174,6 +201,44 @@ export class ModelEntry extends React.Component {
                   <FormControl.Feedback />
                 </FormGroup>
               </Col>
+              <Col xs={12} sm={8}>
+                <FormGroup bsSize='sm' validationState={this.validateUsername()}>
+                  <ControlLabel>Username</ControlLabel>
+                  <FormControl
+                    type='text'
+                    value={this.state.user}
+                    onChange={(e) => this._onChangeHandler(e, 'user')} />
+                  <FormControl.Feedback />
+                </FormGroup>
+              </Col>
+              { this.props.params.id === 'add' &&
+                <div>
+                  <Col xs={12} sm={8}>
+                    <FormGroup bsSize='sm' validationState={this.validatePassword()}>
+                      <ControlLabel>Password</ControlLabel>
+                      <FormControl
+                        type='password'
+                        value={this.state.password}
+                        onChange={(e) => this._onChangeHandler(e, 'password')} />
+                      <FormControl.Feedback />
+                      <HelpBlock><span className='form__info'>Must be at least 6 characters long and contain
+                        at least 1 special character from <span className='verbatim'>!#$%^&*+=_-</span>,
+                        2 numbers and 1 one upper case letter</span>
+                      </HelpBlock>
+                    </FormGroup>
+                  </Col>
+                  <Col xs={12} sm={8}>
+                    <FormGroup bsSize='sm' validationState={this.validateConfirmPassword()}>
+                      <ControlLabel>Confirm Password</ControlLabel>
+                      <FormControl
+                        type='password'
+                        value={this.state.confirmPassword}
+                        onChange={(e) => this._onChangeHandler(e, 'confirmPassword')} />
+                      <FormControl.Feedback />
+                    </FormGroup>
+                  </Col>
+                </div>
+              }
               <Col xs={12} sm={8}>
                 {this.validateForm()
                 ? <button
