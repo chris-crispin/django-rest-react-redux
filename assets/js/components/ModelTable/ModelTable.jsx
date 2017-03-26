@@ -38,14 +38,17 @@ export class ModelTable extends React.Component {
 
     return (
       <div>
-        {this.props.displayLoader &&
+        {(this.props.displayLoader && this.props.entries.length === 0) &&
           <div className='table--container'>
             <Spinner />
           </div>
         }
-        {!this.props.displayLoader &&
+        {this.props.entries.length > 0 &&
           <div>
             <div className='table--container'>
+              {this.props.displayLoader &&
+                <Spinner />
+              }
               <div>
                 <Table className='table' striped condensed responsive hover>
                   <thead>
