@@ -39,20 +39,16 @@ export class ModelTable extends React.Component {
           {this.props.displayLoader &&
             <Spinner />
           }
-          <Table striped hover responsive condensed>
+          <Table striped condensed responsive hover>
             <thead>
               <tr>
                 {headings}
               </tr>
             </thead>
+            <tbody>
+              {tableRows}
+            </tbody>
           </Table>
-          <div className='table__body'>
-            <Table striped condensed responsive hover>
-              <tbody>
-                {tableRows}
-              </tbody>
-            </Table>
-          </div>
         </div>
         <div className='pagination-container'>
           <Pagination
