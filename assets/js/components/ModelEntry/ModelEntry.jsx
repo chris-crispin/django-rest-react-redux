@@ -223,7 +223,7 @@ export class ModelEntry extends React.Component {
                       <FormControl.Feedback />
                       <HelpBlock><span className='form__info'>Must be at least 6 characters long and contain
                         at least 1 special character from <span className='verbatim'>!#$%^&*+=_-</span>,
-                        2 numbers and 1 one upper case letter</span>
+                        2 numbers and 1 upper case letter</span>
                       </HelpBlock>
                     </FormGroup>
                   </Col>
