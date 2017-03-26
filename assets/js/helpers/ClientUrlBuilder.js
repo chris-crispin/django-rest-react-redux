@@ -16,4 +16,12 @@ export default class ClientUrlBuilder {
     }
   }
 
+  static editUserView (id) {
+    browserHistory.push(`/${BASE_URL}/${USER_MODEL}/entry/${id}`)
+  }
+
+  static loginView () {
+    browserHistory.replace(`/${BASE_URL}/login`)
+  }
+
 }

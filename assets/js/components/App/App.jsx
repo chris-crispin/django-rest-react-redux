@@ -1,49 +1,36 @@
 import React from 'react'
 import ConnectedHeader from '../../containers/ConnectedHeader'
-import './styles.scss'
-import AppHandlerHelper from '../../helpers/AppHandlerHelper'
 import ClientUrlBuilder from '../../helpers/ClientUrlBuilder'
 import ToolBar from '../Toolbar/Toolbar'
 import ConnectedAboutModal from '../../containers/ConnectedAboutModal'
 import ConnectedInfoModal from '../../containers/ConnectedInfoModal'
+import { logout } from '../../auth'
+import './styles.scss'
 
 export class App extends React.Component {
 
   constructor (props, context) {
     super(props, context)
     this.state = {
-      entries: [],
-      pages: 0,
-      searchTerm: this.props.params.searchTerm ? this.props.params.searchTerm.replace('-', ' ') : '',
-      page: parseInt(this.props.params.page, 10)
+      searchTerm: this.props.params.searchTerm
+        ? this.props.params.searchTerm.replace('-', ' ') : ''
     }
+  }
+
+  _logout () {
+    logout()
+    ClientUrlBuilder.loginView()
   }
 
   _onSubmit (e) {
     e.preventDefault()
-    const searchTerm = this.state.searchTerm
-    this.props.search(searchTerm, 1).then(() => {
-      ClientUrlBuilder.searchUserView(searchTerm, 1)
-    })
+    ClientUrlBuilder.searchUserView(this.state.searchTerm, 1)
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillUpdate (nextProps) {
     if (this.props.params.searchTerm !== nextProps.params.searchTerm) {
-      this.setState({searchTerm: nextProps.params.searchTerm ? nextProps.params.searchTerm.replace('-', ' ') : ''})
-      this.props.search(nextProps.params.searchTerm, parseInt(this.props.params.page, 10))
-    }
-    if (this.props.params.page !== nextProps.params.page) {
-      this.setState({page: parseInt(nextProps.params.page, 10)})
-      this.props.search(this.props.params.searchTerm, parseInt(nextProps.params.page, 10))
-    }
-  }
-
-  componentDidMount () {
-    if (this.props.params.id && this.props.params.id !== 'add') {
-      AppHandlerHelper.handleClick(this.props.params.id, this.props.lookup)
-    }
-    if (this.state.searchTerm || this.props.params.page) {
-      this.props.search(this.state.searchTerm, parseInt(this.props.params.page, 10))
+      this.setState({searchTerm: nextProps.params.searchTerm
+        ? nextProps.params.searchTerm.replace('-', ' ') : ''})
     }
   }
 
@@ -54,12 +41,12 @@ export class App extends React.Component {
           model={'Users'}
           username={this.props.username}
           loggedIn
-          logout={AppHandlerHelper.logoutHandler} />
+          logout={this._logout} />
         <div className='page__page-container'>
           <ToolBar
             onChange={(e) => this.setState({searchTerm: e.target.value})}
             onSubmit={this._onSubmit.bind(this)}
-            clearSearch={AppHandlerHelper.clearSearch.bind(null, null, this.props.search)}
+            clearSearch={ClientUrlBuilder.searchUserView.bind(null, '', 1)}
             searchTerm={this.state.searchTerm}
             goToAddView={ClientUrlBuilder.addUserView} />
 

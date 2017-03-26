@@ -11,12 +11,5 @@ export const POPULATE = 'POPULATE'
 export const PUT = 'PUT'
 export const POST = 'POST'
 export const CLEAR = 'CLEAR'
-export const EDIT_VIEW = 'EDIT_VIEW'
-export const ADD_VIEW = 'ADD_VIEW'
-export const TABLE_VIEW = 'TABLE_VIEW'
-export const SIMPLE_ANALYSIS = 'SIMPLE_ANALYSIS'
-export const COMPLEX_ANALYSIS = 'COMPLEX_ANALYSIS'
-export const HIDE_ANALYSIS_LOADER = 'HIDE_ANALYSIS_LOADER'
-export const SHOW_ANALYSIS_LOADER = 'SHOW_ANALYSIS_LOADER'
 
 export const PAGE_LIMIT = 20

@@ -10,7 +10,7 @@ import Breadcrumb from 'react-bootstrap/lib/Breadcrumb'
 import ControlLabel from 'react-bootstrap/lib/ControlLabel'
 import Label from 'react-bootstrap/lib/Label'
 import Spinner from '../Spinner/Spinner'
-import AppHandlerHelper from '../../helpers/AppHandlerHelper'
+import ClientUrlBuilder from '../../helpers/ClientUrlBuilder'
 
 export class ModelEntry extends React.Component {
 
@@ -27,7 +27,13 @@ export class ModelEntry extends React.Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentDidMount () {
+    if (this.props.params.id !== 'add') {
+      this.props.lookup(this.props.params.id)
+    }
+  }
+
+  componentWillUpdate (nextProps) {
     if (this.props.user !== nextProps.user) {
       this.setState({'user': nextProps.user,
         'email': nextProps.email,
@@ -95,7 +101,7 @@ export class ModelEntry extends React.Component {
     return (
       <div className='entry-container'>
         <Breadcrumb className='entry-container__breadcrumb'>
-          <Breadcrumb.Item onClick={(e) => AppHandlerHelper.clearSearch(e, this.props.search)}>
+          <Breadcrumb.Item onClick={() => ClientUrlBuilder.searchUserView('', 1)}>
             Home
           </Breadcrumb.Item>
           <Breadcrumb.Item active>

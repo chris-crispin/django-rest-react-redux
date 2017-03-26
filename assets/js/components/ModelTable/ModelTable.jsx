@@ -4,60 +4,73 @@ import Table from 'react-bootstrap/lib/Table'
 import TableRow from '../TableRow/TableRow'
 import Spinner from '../Spinner/Spinner'
 import Pagination from 'react-bootstrap/lib/Pagination'
-import AppHandlerHelper from '../../helpers/AppHandlerHelper'
+import ClientUrlBuilder from '../../helpers/ClientUrlBuilder'
 
-const ModelTable = ({ids, entries, displayLoader, pages, page, lookup}) => {
-  const headings = ['Name', 'User', 'Email', 'Active', 'Staff',
-    'Superuser'].map(heading => <th key={heading}>{heading}</th>)
+export class ModelTable extends React.Component {
 
-  let tableRows = []
-  if (entries) {
-    tableRows = entries.map((entry, i) =>
-      <TableRow
-        key={ids[i]}
-        id={ids[i]}
-        cells={entry}
-        handleClick={() => AppHandlerHelper.handleClick(ids[i], lookup)} />
-    )
+  componentDidMount () {
+    this.props.search(this.props.params.searchTerm, parseInt(this.props.params.page, 10))
   }
 
-  return (
-    <div>
-      <div className='table'>
-        {displayLoader &&
-          <Spinner />
-        }
-        <Table striped hover responsive condensed>
-          <thead>
-            <tr>
-              {headings}
-            </tr>
-          </thead>
-        </Table>
-        <div className='table__body'>
-          <Table striped condensed responsive hover>
-            <tbody>
-              {tableRows}
-            </tbody>
+  componentWillUpdate (nextProps) {
+    if (this.props.params.searchTerm !== nextProps.params.searchTerm) {
+      this.props.search(nextProps.params.searchTerm, parseInt(this.props.params.page, 10))
+    }
+  }
+
+  render () {
+    const headings = ['Name', 'User', 'Email', 'Active', 'Staff',
+      'Superuser'].map(heading => <th key={heading}>{heading}</th>)
+
+    let tableRows = []
+    if (this.props.entries) {
+      tableRows = this.props.entries.map((entry, i) =>
+        <TableRow
+          key={this.props.ids[i]}
+          id={this.props.ids[i]}
+          cells={entry}
+          handleClick={() => ClientUrlBuilder.editUserView(this.props.ids[i])} />
+      )
+    }
+
+    return (
+      <div>
+        <div className='table'>
+          {this.props.displayLoader &&
+            <Spinner />
+          }
+          <Table striped hover responsive condensed>
+            <thead>
+              <tr>
+                {headings}
+              </tr>
+            </thead>
           </Table>
+          <div className='table__body'>
+            <Table striped condensed responsive hover>
+              <tbody>
+                {tableRows}
+              </tbody>
+            </Table>
+          </div>
+        </div>
+        <div className='pagination-container'>
+          <Pagination
+            prev
+            next
+            first
+            last
+            ellipsis
+            boundaryLinks
+            items={this.props.pages}
+            maxButtons={5}
+            activePage={this.props.page}
+            onSelect={() => {}}
+          />
         </div>
       </div>
-      <div className='pagination-container'>
-        <Pagination
-          prev
-          next
-          first
-          last
-          ellipsis
-          boundaryLinks
-          items={pages}
-          maxButtons={5}
-          activePage={page}
-          onSelect={() => {}}
-        />
-      </div>
-    </div>
-  )
+    )
+  }
 }
 
 ModelTable.propTypes = {

@@ -1,6 +1,7 @@
 import * as constants from './constants'
 import ApiHelper from '../helpers/ApiHelper'
 import { browserHistory } from 'react-router'
+import ClientUrlBuilder from '../helpers/ClientUrlBuilder'
 
 export const showModal = () => ({
   type: constants.SHOW_MODAL
@@ -58,7 +59,6 @@ export const search = (searchTerm, page) => {
 export const lookup = (id) => {
   return function (dispatch) {
     dispatch(showLoader())
-
     return ApiHelper.lookup(id)
             .then((result) => {
               dispatch(populateSearchResults([result]))
@@ -73,8 +73,8 @@ export const safeDelete = (id) => {
 
     return ApiHelper.delete(id)
             .then((result) => {
-              dispatch(populateSearchResults([]))
               dispatch(hideLoader())
+              ClientUrlBuilder.searchUserView('', 1)
               dispatch(showInfoModal(result.msg))
             })
   }
