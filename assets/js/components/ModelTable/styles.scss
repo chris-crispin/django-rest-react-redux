@@ -12,5 +12,8 @@
   }
   tbody {
     width: 100%;
+    tr {
+      height: calc(4vh);
+    }
   }
 }

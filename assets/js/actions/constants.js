@@ -12,4 +12,4 @@ export const PUT = 'PUT'
 export const POST = 'POST'
 export const CLEAR = 'CLEAR'
 
-export const PAGE_LIMIT = 20
+export const PAGE_LIMIT = 12
