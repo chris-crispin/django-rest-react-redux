@@ -1,9 +1,11 @@
-.table {
-  font-family: Lato;
+.table--container {
+  height: calc(70vh);
   margin: 0 2% 0 2%;
   width: 96%;
-  height: calc(70vh);
-  overflow-y: auto;
+}
+
+.table {
+  font-family: Lato;
   thead {
     tr {
       height: 30px;
@@ -12,8 +14,11 @@
   }
   tbody {
     width: 100%;
-    tr {
-      height: calc(4vh);
-    }
   }
+}
+
+.pagination--container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -16,6 +16,9 @@ export class ModelTable extends React.Component {
     if (this.props.params.searchTerm !== nextProps.params.searchTerm) {
       this.props.search(nextProps.params.searchTerm, parseInt(this.props.params.page, 10))
     }
+    if (this.props.params.page !== nextProps.params.page) {
+      this.props.search(this.props.params.searchTerm, parseInt(nextProps.params.page, 10))
+    }
   }
 
   render () {
@@ -35,35 +38,42 @@ export class ModelTable extends React.Component {
 
     return (
       <div>
-        <div className='table'>
-          {this.props.displayLoader &&
+        {this.props.displayLoader &&
+          <div className='table--container'>
             <Spinner />
-          }
-          <Table striped condensed responsive hover>
-            <thead>
-              <tr>
-                {headings}
-              </tr>
-            </thead>
-            <tbody>
-              {tableRows}
-            </tbody>
-          </Table>
-        </div>
-        <div className='pagination-container'>
-          <Pagination
-            prev
-            next
-            first
-            last
-            ellipsis
-            boundaryLinks
-            items={this.props.pages}
-            maxButtons={5}
-            activePage={this.props.page}
-            onSelect={() => {}}
-          />
-        </div>
+          </div>
+        }
+        {!this.props.displayLoader &&
+          <div>
+            <div className='table--container'>
+              <div>
+                <Table className='table' striped condensed responsive hover>
+                  <thead>
+                    <tr>
+                      {headings}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tableRows}
+                  </tbody>
+                </Table>
+              </div>
+            </div>
+            <div className='pagination--container'>
+              <Pagination
+                prev
+                next
+                first
+                last
+                ellipsis
+                boundaryLinks
+                items={this.props.pages}
+                maxButtons={5}
+                activePage={this.props.page}
+                onSelect={(e) => ClientUrlBuilder.searchUserView(this.props.params.searchTerm, e)}
+              />
+            </div>
+          </div>}
       </div>
     )
   }
