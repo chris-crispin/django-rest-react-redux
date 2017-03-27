@@ -1,10 +1,11 @@
 import React from 'react'
 import Button from 'react-bootstrap/lib/Button'
 import Modal from 'react-bootstrap/lib/Modal'
+import './styles.scss'
 
 const AboutModal = ({displayModal, hideModal}) => {
   return (
-    <Modal show={displayModal} onHide={hideModal}>
+    <Modal show={displayModal} onHide={hideModal} className='modal'>
       <Modal.Header closeButton>
         <Modal.Title>About Django-rest-react-redux</Modal.Title>
       </Modal.Header>
