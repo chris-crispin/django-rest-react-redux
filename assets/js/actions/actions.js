@@ -2,6 +2,7 @@ import * as constants from './constants'
 import ApiHelper from '../helpers/ApiHelper'
 import { browserHistory } from 'react-router'
 import ClientUrlBuilder from '../helpers/ClientUrlBuilder'
+import { logout } from '../auth'
 
 export const showModal = () => ({
   type: constants.SHOW_MODAL
@@ -48,6 +49,11 @@ export const search = (searchTerm, page) => {
 
     return ApiHelper.search(searchTerm || '', page || 1)
             .then((response) => {
+              if (response.statusCode === 401) {
+                logout()
+                dispatch(hideLoader())
+                return
+              }
               const result = response.results
               const count = response.count
               dispatch(populateSearchResults(result, Math.floor(count / constants.PAGE_LIMIT) + 1, page))
@@ -60,8 +66,13 @@ export const lookup = (id) => {
   return function (dispatch) {
     dispatch(showLoader())
     return ApiHelper.lookup(id)
-            .then((result) => {
-              dispatch(populateSearchResults([result]))
+            .then((response) => {
+              if (response.statusCode === 401) {
+                logout()
+                dispatch(hideLoader())
+                return
+              }
+              dispatch(populateSearchResults([response]))
               dispatch(hideLoader())
             })
   }
@@ -72,10 +83,15 @@ export const safeDelete = (id) => {
     dispatch(showLoader())
 
     return ApiHelper.delete(id)
-            .then((result) => {
+            .then((response) => {
+              if (response.statusCode === 401) {
+                logout()
+                dispatch(hideLoader())
+                return
+              }
               dispatch(hideLoader())
               ClientUrlBuilder.searchUserView('', 1)
-              dispatch(showInfoModal(result.msg))
+              dispatch(showInfoModal(response.msg))
             })
   }
 }
@@ -85,8 +101,13 @@ export const put = (id, firstName, lastName, user, email, username) => {
     dispatch(showLoader())
 
     return ApiHelper.put(id, firstName, lastName, user, email, username)
-            .then((result) => {
-              dispatch(populateSearchResults([result]))
+            .then((response) => {
+              if (response.statusCode === 401) {
+                logout()
+                dispatch(hideLoader())
+                return
+              }
+              dispatch(populateSearchResults([response]))
               dispatch(hideLoader())
               browserHistory.push(`/app/users/entry/${id}`)
             })
@@ -98,10 +119,15 @@ export const post = (firstName, lastName, user, email, username) => {
     dispatch(showLoader())
 
     return ApiHelper.post(firstName, lastName, user, email, username)
-            .then((result) => {
-              dispatch(populateSearchResults([result]))
+            .then((response) => {
+              if (response.statusCode === 401) {
+                logout()
+                dispatch(hideLoader())
+                return
+              }
+              dispatch(populateSearchResults([response]))
               dispatch(hideLoader())
-              const id = result.id
+              const id = response.id
               browserHistory.push(`/app/users/entry/${id}`)
             })
   }

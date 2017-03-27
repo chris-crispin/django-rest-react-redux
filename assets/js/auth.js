@@ -1,17 +1,18 @@
  /* global localStorage */
 import request from 'superagent'
 import cookie from 'react-cookie'
+import ClientUrlBuilder from './helpers/ClientUrlBuilder'
 
 const login = (username, password) => {
   return new Promise((resolve) => {
-    if (localStorage.token) {
+    if (localStorage.getItem('token')) {
       resolve(true)
     }
     getToken(username, password)
-            .then((res) => {
-              if (res.authenticated) {
-                localStorage.token = res.token
-                localStorage.user = username
+            .then((response) => {
+              if (response.authenticated) {
+                localStorage.setItem('token', response.token)
+                localStorage.setItem('user', response.user.username)
                 resolve(true)
               } else {
                 resolve(false)
@@ -23,10 +24,11 @@ const login = (username, password) => {
 const logout = () => {
   delete localStorage.token
   delete localStorage.user
+  ClientUrlBuilder.loginView()
 }
 
 const loggedIn = () => {
-  return !!localStorage.token
+  return !!localStorage.getItem('token')
 }
 
 const getToken = (username, password) => {
@@ -42,12 +44,14 @@ const getToken = (username, password) => {
               if (!err) {
                 resolve({
                   authenticated: true,
-                  token: res.body.token
+                  token: res.body.token,
+                  user: res.body.user
                 })
               } else {
                 resolve({
                   authenticated: false,
-                  token: null
+                  token: null,
+                  user: null
                 })
               }
             })

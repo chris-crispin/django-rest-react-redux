@@ -61,7 +61,7 @@ export class ModelEntry extends React.Component {
       e.preventDefault()
     }
     if (this.validateForm()) {
-      const username = localStorage.user
+      const username = localStorage.getItem('user')
       if (this.props.id) {
         this.props.put(this.props.id, username, this.state)
       } else {

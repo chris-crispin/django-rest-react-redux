@@ -39,7 +39,7 @@ const Header = ({loggedIn, username, logout, model, showModal}) => {
           {
             loggedIn &&
             <Nav pullRight>
-              <NavDropdown id={'account'} eventKey={3} title={username || localStorage.user}>
+              <NavDropdown id={'account'} eventKey={3} title={username || localStorage.getItem('user')}>
                 <MenuItem eventKey={3.1}>
                   User
                 </MenuItem>

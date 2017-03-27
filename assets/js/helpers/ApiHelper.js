@@ -5,16 +5,24 @@ import {USER_MODEL} from './RouterHelper'
 
 export default class ApiHelper {
 
+  static _authHeader (token) {
+    return `JWT ${token}`
+  }
+
   static search (searchTerm, page) {
     const url = searchTerm ? `/${USER_MODEL}/?q=${searchTerm}&limit=${constants.PAGE_LIMIT}&offset=${constants.PAGE_LIMIT * (page - 1)}` : `/${USER_MODEL}?limit=${constants.PAGE_LIMIT}&offset=${constants.PAGE_LIMIT * (page - 1)}`
     return new Promise((resolve) => {
       request
         .get(url)
         .set('Accept', 'application/json')
-        .set('Authorization', 'Token ' + localStorage.token)
+        .set('Authorization', this._authHeader(localStorage.getItem('token')))
         .end((err, res) => {
           if (err) {
-            resolve(err)
+            if (res.statusCode === 401) {
+              resolve(res)
+            } else {
+              resolve(err)
+            }
           } else {
             resolve(res.body)
           }
@@ -28,10 +36,14 @@ export default class ApiHelper {
       request
         .get(url)
         .set('Accept', 'application/json')
-        .set('Authorization', 'Token ' + localStorage.token)
+        .set('Authorization', this._authHeader(localStorage.getItem('token')))
         .end((err, res) => {
           if (err) {
-            resolve(err)
+            if (res.statusCode === 401) {
+              resolve(res)
+            } else {
+              resolve(err)
+            }
           } else {
             resolve(res.body)
           }
@@ -45,7 +57,7 @@ export default class ApiHelper {
       request
         .delete(url)
         .set('Accept', 'application/json')
-        .set('Authorization', 'Token ' + localStorage.token)
+        .set('Authorization', this._authHeader(localStorage.getItem('token')))
         .end((err, res) => {
           if (err) {
             resolve({msg: `Failed to delete entry ${id}.`})
@@ -73,12 +85,16 @@ export default class ApiHelper {
       request
         .put(url)
         .set('Accept', 'application/json')
-        .set('Authorization', 'Token ' + localStorage.token)
+        .set('Authorization', this._authHeader(localStorage.getItem('token')))
         .withCredentials()
         .send(payload)
         .end((err, res) => {
           if (err) {
-            resolve(err)
+            if (res.statusCode === 401) {
+              resolve(res)
+            } else {
+              resolve(err)
+            }
           } else {
             resolve(res.body)
           }
@@ -105,12 +121,16 @@ export default class ApiHelper {
       request
         .post(url)
         .set('Accept', 'application/json')
-        .set('Authorization', 'Token ' + localStorage.token)
+        .set('Authorization', this._authHeader(localStorage.getItem('token')))
         .withCredentials()
         .send(payload)
         .end((err, res) => {
           if (err) {
-            resolve(err)
+            if (res.statusCode === 401) {
+              resolve(res)
+            } else {
+              resolve(err)
+            }
           } else {
             resolve(res.body)
           }

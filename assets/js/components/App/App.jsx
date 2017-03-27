@@ -17,11 +17,6 @@ export class App extends React.Component {
     }
   }
 
-  _logout () {
-    logout()
-    ClientUrlBuilder.loginView()
-  }
-
   _onSubmit (e) {
     e.preventDefault()
     ClientUrlBuilder.searchUserView(this.state.searchTerm, 1)
@@ -41,7 +36,7 @@ export class App extends React.Component {
           model={'Users'}
           username={this.props.username}
           loggedIn
-          logout={this._logout} />
+          logout={logout} />
         <div className='page__page-container'>
           <ToolBar
             onChange={(e) => this.setState({searchTerm: e.target.value})}
