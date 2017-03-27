@@ -1,6 +1,5 @@
  /* global localStorage */
 import request from 'superagent'
-import cookie from 'react-cookie'
 import ClientUrlBuilder from './helpers/ClientUrlBuilder'
 
 const login = (username, password) => {
@@ -38,7 +37,7 @@ const getToken = (username, password) => {
     request
             .post('/obtain-auth-token/')
             .set('Accept', 'application/json')
-            .set('X-CSRFToken', cookie.select(new RegExp('csrftoken')).csrftoken)
+            .withCredentials()
             .send(payload)
             .end((err, res) => {
               if (!err) {
