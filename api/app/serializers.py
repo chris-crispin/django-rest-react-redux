@@ -1,6 +1,12 @@
 from __future__ import print_function
 from django.contrib.auth.models import User, Group
+from api.app.models import Team
 from rest_framework import serializers
+
+class TeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = ('id', 'team_name', 'stadium_name', 'location',)
 
 
 class UserSerializer(serializers.ModelSerializer):

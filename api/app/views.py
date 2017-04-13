@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User, Group
+from api.app.models import Team
 from django.db.models import Q
 from rest_framework import viewsets
 from rest_framework.response import Response
-from api.app.serializers import UserSerializer, GroupSerializer
+from api.app.serializers import UserSerializer, GroupSerializer, TeamSerializer
 import logging
 import jsonlogging
 
@@ -13,6 +14,14 @@ logHandler = logging.StreamHandler()
 formatter = jsonlogging.JSONFormatter()
 logHandler.setFormatter(formatter)
 logger.addHandler(logHandler)
+
+class TeamViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows teams to be viewed or edited.
+    """
+
+    queryset = Team.objects.all()
+    serializer_class = TeamSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
