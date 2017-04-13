@@ -32,7 +32,7 @@ export class ModelTable extends React.Component {
           key={this.props.ids[i]}
           id={this.props.ids[i]}
           cells={entry}
-          handleClick={() => ClientUrlBuilder.editUserView(this.props.ids[i])} />
+          handleClick={() => this.props.editUserView(this.props.ids[i])} />
       )
     }
 
@@ -88,7 +88,8 @@ ModelTable.propTypes = {
   displayLoader: React.PropTypes.bool.isRequired,
   pages: React.PropTypes.number.isRequired,
   page: React.PropTypes.number.isRequired,
-  lookup: React.PropTypes.func.isRequired
+  lookup: React.PropTypes.func.isRequired,
+  editUserView: React.PropTypes.func.isRequired
 }
 
 export default ModelTable

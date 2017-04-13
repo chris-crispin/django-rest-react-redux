@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import * as actions from '../actions/actions'
-import ModelTable from '../components/ModelTable/ModelTable'
+import ModelTable from '../../common/components/ModelTable/ModelTable'
 
 function mapStateToProps (state) {
   const ids = []

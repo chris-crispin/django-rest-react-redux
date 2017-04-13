@@ -1,7 +1,7 @@
 /* global localStorage */
 import request from 'superagent'
 import * as constants from '../actions/constants'
-import {USER_MODEL} from './RouterHelper'
+import {USER_MODEL} from '../../common/helpers/RouterHelper'
 
 export default class ApiHelper {
 

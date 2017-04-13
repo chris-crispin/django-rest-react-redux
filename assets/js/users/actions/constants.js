@@ -1,0 +1,15 @@
+export const SHOW_MODAL = 'SHOW_MODAL'
+export const HIDE_MODAL = 'HIDE_MODAL'
+export const SHOW_INFO_MODAL = 'SHOW_INFO_MODAL'
+export const HIDE_INFO_MODAL = 'HIDE_INFO_MODAL'
+export const SHOW_LOADER = 'SHOW_LOADER'
+export const HIDE_LOADER = 'HIDE_LOADER'
+export const SET_USER = 'SET_USER'
+export const SEARCH = 'SEARCH'
+export const LOOKUP = 'LOOKUP'
+export const POPULATE = 'POPULATE'
+export const PUT = 'PUT'
+export const POST = 'POST'
+export const CLEAR = 'CLEAR'
+
+export const PAGE_LIMIT = 12

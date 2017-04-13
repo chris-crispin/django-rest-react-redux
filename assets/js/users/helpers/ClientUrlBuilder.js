@@ -1,5 +1,5 @@
 import { browserHistory } from 'react-router'
-import {BASE_URL, USER_MODEL} from './RouterHelper'
+import {BASE_URL, USER_MODEL} from '../../common/helpers/RouterHelper'
 
 export default class ClientUrlBuilder {
 
@@ -19,9 +19,4 @@ export default class ClientUrlBuilder {
   static editUserView (id) {
     browserHistory.push(`/${BASE_URL}/${USER_MODEL}/entry/${id}`)
   }
-
-  static loginView () {
-    browserHistory.replace(`/${BASE_URL}/login`)
-  }
-
 }

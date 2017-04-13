@@ -1,10 +1,10 @@
 import React from 'react'
-import ConnectedHeader from '../../containers/ConnectedHeader'
+import ConnectedHeader from '../../../common/containers/ConnectedHeader'
 import ClientUrlBuilder from '../../helpers/ClientUrlBuilder'
-import ToolBar from '../Toolbar/Toolbar'
-import ConnectedAboutModal from '../../containers/ConnectedAboutModal'
+import ToolBar from '../../../common/components/Toolbar/Toolbar'
+import ConnectedAboutModal from '../../../common/containers/ConnectedAboutModal'
 import ConnectedInfoModal from '../../containers/ConnectedInfoModal'
-import { logout } from '../../auth'
+import { logout } from '../../../common/auth'
 import './styles.scss'
 
 export class App extends React.Component {

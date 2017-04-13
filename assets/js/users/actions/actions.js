@@ -2,7 +2,7 @@ import * as constants from './constants'
 import ApiHelper from '../helpers/ApiHelper'
 import { browserHistory } from 'react-router'
 import ClientUrlBuilder from '../helpers/ClientUrlBuilder'
-import { logout } from '../auth'
+import { logout } from '../../common/auth'
 
 export const showModal = () => ({
   type: constants.SHOW_MODAL
@@ -130,5 +130,19 @@ export const post = (firstName, lastName, user, email, username) => {
               const id = response.id
               browserHistory.push(`/app/users/entry/${id}`)
             })
+  }
+}
+
+export const editUserView = (id) => {
+  return function (dispatch) {
+    dispatch(showLoader())
+    ClientUrlBuilder.editUserView(id)
+  }
+}
+
+export const searchUserView = (searchTerm, page) => {
+  return function (dispatch) {
+    dispatch(showLoader())
+    ClientUrlBuilder.searchUserView(searchTerm, page)
   }
 }

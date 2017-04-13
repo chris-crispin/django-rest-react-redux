@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import * as actions from '../actions/actions'
-import ModelEntry from '../components/ModelEntry/ModelEntry'
+import ModelEntry from '../../common/components/ModelEntry/ModelEntry'
 
 function mapStateToProps (state, ownProps) {
   if (ownProps.params.id !== 'add') {

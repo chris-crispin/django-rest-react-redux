@@ -57,6 +57,10 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 20
 }
 
+FIXTURE_DIRS = (
+   os.path.join(BASE_DIR, 'api/fixtures/')
+)
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
