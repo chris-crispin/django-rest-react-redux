@@ -6,6 +6,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 const VERSION = require('./app-version-plugin').VERSION
+const webpackCommon = require('./webpack.common')
 
 module.exports = {
     // the base directory (absolute path) for resolving the entry option
@@ -52,6 +53,11 @@ module.exports = {
 
   plugins: [
     new HtmlWebpackPlugin({ title: 'Tree-shaking' }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      chunk: 'app',
+      minChunks: (module, count) => webpackCommon._isVendor(module)
+    }),
     new BundleTracker({filename: './webpack-stats.json'}),
     new webpack.LoaderOptionsPlugin({
       minimize: true,

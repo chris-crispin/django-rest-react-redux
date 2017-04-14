@@ -1,6 +1,8 @@
 // require our dependencies
 const path = require('path')
 const BundleTracker = require('webpack-bundle-tracker')
+const webpack = require('webpack')
+const webpackCommon = require('./webpack.common')
 
 module.exports = {
   // the base directory (absolute path) for resolving the entry option
@@ -22,7 +24,12 @@ module.exports = {
 
   plugins: [
     // tells webpack where to store data about your bundles.
-    new BundleTracker({filename: './webpack-stats.json'})
+    new BundleTracker({filename: './webpack-stats.json'}),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      chunk: 'app',
+      minChunks: (module, count) => webpackCommon._isVendor(module)
+    })
   ],
 
   module: {
