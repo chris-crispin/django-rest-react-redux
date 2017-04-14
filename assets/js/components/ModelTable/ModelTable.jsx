@@ -15,6 +15,9 @@ export class ModelTable extends React.Component {
   }
 
   componentWillUpdate (nextProps) {
+    if (this.props.params.model !== nextProps.params.model) {
+      this.props.search('', 1, nextProps.params.model)
+    }
     if (this.props.params.searchTerm !== nextProps.params.searchTerm) {
       this.props.search(nextProps.params.searchTerm, parseInt(this.props.params.page, 10), this.props.params.model)
     }
