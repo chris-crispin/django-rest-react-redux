@@ -23,6 +23,14 @@ class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
 
+    def get_queryset(self):
+        query = self.request.query_params.get('q', None)
+        if query:
+            teams = Team.objects.filter(Q(team_name__icontains=query)).order_by('team_name')
+        else:
+            teams = Team.objects.all().order_by('team_name')
+        return teams
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -34,16 +42,10 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         query = self.request.query_params.get('q', None)
         if query:
-            users = User.objects.filter(Q(username__icontains=query) | Q(email__icontains=query)).order_by('username')
+            users = User.objects.filter(Q(username__icontains=query)).order_by('username')
         else:
             users = User.objects.all().order_by('username')
         return users
-
-    def retrieve(self, request, pk=None):
-        if pk == 'i':
-            return Response(UserSerializer(request.user,
-                            context={'request': request}).data)
-        return super(UserViewSet, self).retrieve(request, pk)
 
 
 class GroupViewSet(viewsets.ModelViewSet):

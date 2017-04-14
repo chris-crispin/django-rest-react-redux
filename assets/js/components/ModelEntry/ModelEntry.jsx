@@ -140,7 +140,7 @@ export class ModelEntry extends React.Component {
     return (
       <div className='entry-container'>
         <Breadcrumb className='entry-container__breadcrumb'>
-          <Breadcrumb.Item onClick={() => ClientUrlBuilder.searchUserView('', 1)}>
+          <Breadcrumb.Item onClick={() => ClientUrlBuilder.searchView('', 1, this.props.params.model)}>
             Home
           </Breadcrumb.Item>
           <Breadcrumb.Item active>
@@ -255,7 +255,7 @@ export class ModelEntry extends React.Component {
                 {this.props.id &&
                 <button
                   className='delete--button'
-                  onClick={() => this.props.safeDelete(this.props.id)}>
+                  onClick={() => this.props.safeDelete(this.props.id, this.props.params.model)}>
                   Delete
                 </button> }
               </Col>

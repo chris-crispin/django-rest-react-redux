@@ -6,6 +6,3 @@ class Team(models.Model):
     team_name = models.CharField(max_length=100)
     stadium_name = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
-
-    class Meta:
-        ordering = ('team_name',)

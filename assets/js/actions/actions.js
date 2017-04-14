@@ -43,11 +43,11 @@ export const populateSearchResults = (result, pages, page) => {
   })
 }
 
-export const search = (searchTerm, page) => {
+export const search = (searchTerm, page, model) => {
   return function (dispatch) {
     dispatch(showLoader())
 
-    return ApiHelper.search(searchTerm || '', page || 1)
+    return ApiHelper.search(searchTerm || '', page || 1, model)
             .then((response) => {
               if (response.statusCode === 401) {
                 logout()
@@ -78,7 +78,7 @@ export const lookup = (id) => {
   }
 }
 
-export const safeDelete = (id) => {
+export const safeDelete = (id, model) => {
   return function (dispatch) {
     dispatch(showLoader())
 
@@ -90,7 +90,7 @@ export const safeDelete = (id) => {
                 return
               }
               dispatch(hideLoader())
-              ClientUrlBuilder.searchUserView('', 1)
+              ClientUrlBuilder.searchView('', 1, model)
               dispatch(showInfoModal(response.msg))
             })
   }

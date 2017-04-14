@@ -9,8 +9,8 @@ export default class ApiHelper {
     return `JWT ${token}`
   }
 
-  static search (searchTerm, page) {
-    const url = searchTerm ? `/${USER_MODEL}/?q=${searchTerm}&limit=${constants.PAGE_LIMIT}&offset=${constants.PAGE_LIMIT * (page - 1)}` : `/${USER_MODEL}?limit=${constants.PAGE_LIMIT}&offset=${constants.PAGE_LIMIT * (page - 1)}`
+  static search (searchTerm, page, model) {
+    const url = searchTerm ? `/${model}/?q=${searchTerm}&limit=${constants.PAGE_LIMIT}&offset=${constants.PAGE_LIMIT * (page - 1)}` : `/${model}?limit=${constants.PAGE_LIMIT}&offset=${constants.PAGE_LIMIT * (page - 1)}`
     return new Promise((resolve) => {
       request
         .get(url)

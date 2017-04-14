@@ -28,7 +28,7 @@ ReactDOM.render(
       <Route path={BASE_URL}>
         <IndexRedirect to={USER_MODEL} />
         <Route path='login' component={ConnectedLogin} />
-        <Route path={USER_MODEL} component={ConnectedApp} onEnter={requireAuth}>
+        <Route path={':model'} component={ConnectedApp} onEnter={requireAuth}>
           <IndexRedirect to='search/1' />
           <Route path='search/:page' components={{modelView: ConnectedModelTable}} />
           <Route path='search/:searchTerm/:page' components={{modelView: ConnectedModelTable}} />

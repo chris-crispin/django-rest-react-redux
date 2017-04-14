@@ -7,12 +7,7 @@ function mapStateToProps (state) {
   const values = []
   if (state.entries) {
     state.entries.forEach(entry => {
-      values.push([entry.first_name + ' ' + entry.last_name,
-        entry.username,
-        entry.email,
-        entry.is_active,
-        entry.is_staff,
-        entry.is_superuser])
+      values.push(Object.values(entry).slice(1))
       ids.push(entry.id)
     })
   }

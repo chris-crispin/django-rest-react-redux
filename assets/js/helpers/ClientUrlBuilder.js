@@ -1,23 +1,23 @@
 import { browserHistory } from 'react-router'
-import {BASE_URL, USER_MODEL} from './RouterHelper'
+import {BASE_URL} from './RouterHelper'
 
 export default class ClientUrlBuilder {
 
-  static addUserView () {
-    browserHistory.push(`/${BASE_URL}/${USER_MODEL}/entry/add`)
+  static addView (model) {
+    browserHistory.push(`/${BASE_URL}/${model}/entry/add`)
   }
 
-  static searchUserView (searchTerm, page) {
+  static searchView (searchTerm, page, model) {
     if (searchTerm) {
       const decodedSearchTerm = searchTerm.replace(' ', '-')
-      browserHistory.push(`/${BASE_URL}/${USER_MODEL}/search/${decodedSearchTerm}/${page}`)
+      browserHistory.push(`/${BASE_URL}/${model}/search/${decodedSearchTerm}/${page}`)
     } else {
-      browserHistory.push(`/${BASE_URL}/${USER_MODEL}/search/${page}`)
+      browserHistory.push(`/${BASE_URL}/${model}/search/${page}`)
     }
   }
 
-  static editUserView (id) {
-    browserHistory.push(`/${BASE_URL}/${USER_MODEL}/entry/${id}`)
+  static editView (id, model) {
+    browserHistory.push(`/${BASE_URL}/${model}/entry/${id}`)
   }
 
   static loginView () {

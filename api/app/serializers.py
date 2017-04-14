@@ -12,9 +12,8 @@ class TeamSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'date_joined', 'first_name',
-                  'last_name', 'is_staff', 'is_active', 'is_superuser',
-                  'password')
+        fields = ('id', 'first_name', 'last_name', 'username', 'email',
+        'is_staff', 'is_active', 'is_superuser', 'password')
         extra_kwargs = {
             'password': {'write_only': True,
                          'required': False}
