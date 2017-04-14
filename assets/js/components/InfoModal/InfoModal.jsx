@@ -1,6 +1,7 @@
 import React from 'react'
 import Button from 'react-bootstrap/lib/Button'
 import Modal from 'react-bootstrap/lib/Modal'
+import PropTypes from 'prop-types'
 
 const InfoModal = ({displayInfoModal, hideInfoModal, infoMsg}) => {
   return (
@@ -19,9 +20,9 @@ const InfoModal = ({displayInfoModal, hideInfoModal, infoMsg}) => {
 }
 
 InfoModal.propTypes = {
-  displayInfoModal: React.PropTypes.bool,
-  infoMsg: React.PropTypes.string,
-  hideInfoModal: React.PropTypes.func
+  displayInfoModal: PropTypes.bool,
+  infoMsg: PropTypes.string,
+  hideInfoModal: PropTypes.func
 }
 
 export default InfoModal

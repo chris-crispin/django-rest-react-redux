@@ -12,6 +12,7 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel'
 import Label from 'react-bootstrap/lib/Label'
 import Spinner from '../Spinner/Spinner'
 import ClientUrlBuilder from '../../helpers/ClientUrlBuilder'
+import PropTypes from 'prop-types'
 
 export class ModelEntry extends React.Component {
 
@@ -266,15 +267,15 @@ export class ModelEntry extends React.Component {
 }
 
 ModelEntry.propTypes = {
-  user: React.PropTypes.string.isRequired,
-  email: React.PropTypes.string.isRequired,
-  firstName: React.PropTypes.string.isRequired,
-  lastName: React.PropTypes.string.isRequired,
-  isActive: React.PropTypes.bool.isRequired,
-  isStaff: React.PropTypes.bool.isRequired,
-  isSuper: React.PropTypes.bool.isRequired,
-  id: React.PropTypes.number,
-  displayLoader: React.PropTypes.bool.isRequired
+  user: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  firstName: PropTypes.string.isRequired,
+  lastName: PropTypes.string.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  isStaff: PropTypes.bool.isRequired,
+  isSuper: PropTypes.bool.isRequired,
+  id: PropTypes.number,
+  displayLoader: PropTypes.bool.isRequired
 }
 
 export default ModelEntry

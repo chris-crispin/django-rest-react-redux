@@ -1,6 +1,7 @@
 import React from 'react'
 import Button from 'react-bootstrap/lib/Button'
 import Modal from 'react-bootstrap/lib/Modal'
+import PropTypes from 'prop-types'
 import './styles.scss'
 
 const AboutModal = ({displayModal, hideModal}) => {
@@ -29,8 +30,8 @@ const AboutModal = ({displayModal, hideModal}) => {
 }
 
 AboutModal.propTypes = {
-  displayModal: React.PropTypes.bool,
-  hideModal: React.PropTypes.func
+  displayModal: PropTypes.bool,
+  hideModal: PropTypes.func
 }
 
 export default AboutModal

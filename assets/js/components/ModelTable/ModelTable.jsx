@@ -5,6 +5,7 @@ import TableRow from '../TableRow/TableRow'
 import Spinner from '../Spinner/Spinner'
 import Pagination from 'react-bootstrap/lib/Pagination'
 import ClientUrlBuilder from '../../helpers/ClientUrlBuilder'
+import PropTypes from 'prop-types'
 
 export class ModelTable extends React.Component {
 
@@ -83,12 +84,12 @@ export class ModelTable extends React.Component {
 }
 
 ModelTable.propTypes = {
-  ids: React.PropTypes.array.isRequired,
-  entries: React.PropTypes.array.isRequired,
-  displayLoader: React.PropTypes.bool.isRequired,
-  pages: React.PropTypes.number.isRequired,
-  page: React.PropTypes.number.isRequired,
-  lookup: React.PropTypes.func.isRequired
+  ids: PropTypes.array.isRequired,
+  entries: PropTypes.array.isRequired,
+  displayLoader: PropTypes.bool.isRequired,
+  pages: PropTypes.number.isRequired,
+  page: PropTypes.number.isRequired,
+  lookup: PropTypes.func.isRequired
 }
 
 export default ModelTable

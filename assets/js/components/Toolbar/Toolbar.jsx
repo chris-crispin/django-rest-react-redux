@@ -1,5 +1,6 @@
 import React from 'react'
 import './styles.scss'
+import PropTypes from 'prop-types'
 
 const Toolbar = ({onChange, onSubmit, clearSearch, searchTerm, goToAddView}) => {
   return (
@@ -40,11 +41,11 @@ const Toolbar = ({onChange, onSubmit, clearSearch, searchTerm, goToAddView}) => 
 }
 
 Toolbar.PropTypes = {
-  onChange: React.PropTypes.func.isRequired,
-  onSubmit: React.PropTypes.func.isRequired,
-  clearSearch: React.PropTypes.func.isRequired,
-  searchTerm: React.PropTypes.string,
-  goToAddView: React.PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  clearSearch: PropTypes.func.isRequired,
+  searchTerm: PropTypes.string,
+  goToAddView: PropTypes.func.isRequired
 }
 
 export default Toolbar

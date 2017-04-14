@@ -1,6 +1,7 @@
 import React from 'react'
 import Checkbox from 'react-bootstrap/lib/Checkbox'
 import './styles.scss'
+import PropTypes from 'prop-types'
 
 const TableRow = ({id, cells, handleClick}) => {
   const tableCells = cells.map((cell, i) => {
@@ -21,9 +22,9 @@ const TableRow = ({id, cells, handleClick}) => {
 }
 
 TableRow.propTypes = {
-  id: React.PropTypes.number.isRequired,
-  cells: React.PropTypes.array.isRequired,
-  handleClick: React.PropTypes.func.isRequired
+  id: PropTypes.number.isRequired,
+  cells: PropTypes.array.isRequired,
+  handleClick: PropTypes.func.isRequired
 }
 
 export default TableRow

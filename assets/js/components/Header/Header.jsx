@@ -6,6 +6,7 @@ import NavItem from 'react-bootstrap/lib/NavItem'
 import MenuItem from 'react-bootstrap/lib/MenuItem'
 import NavDropdown from 'react-bootstrap/lib/NavDropdown'
 import Nav from 'react-bootstrap/lib/Nav'
+import PropTypes from 'prop-types'
 
 const Header = ({loggedIn, username, logout, model, showModal}) => {
   const appName = 'django-rest-react-redux'
@@ -56,11 +57,11 @@ const Header = ({loggedIn, username, logout, model, showModal}) => {
 }
 
 Header.PropTypes = {
-  loggedIn: React.PropTypes.bool.isRequired,
-  username: React.PropTypes.string.isRequired,
-  logout: React.PropTypes.func,
-  model: React.PropTypes.string,
-  showModal: React.PropTypes.func.isRequired
+  loggedIn: PropTypes.bool.isRequired,
+  username: PropTypes.string.isRequired,
+  logout: PropTypes.func,
+  model: PropTypes.string,
+  showModal: PropTypes.func.isRequired
 }
 
 export default Header
