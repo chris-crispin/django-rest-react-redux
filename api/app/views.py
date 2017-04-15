@@ -1,9 +1,9 @@
 from django.contrib.auth.models import User, Group
-from api.app.models import Team
+from api.app.models import Team, Player
 from django.db.models import Q
 from rest_framework import viewsets
 from rest_framework.response import Response
-from api.app.serializers import UserSerializer, GroupSerializer, TeamSerializer
+from api.app.serializers import UserSerializer, GroupSerializer, TeamSerializer, PlayerSerializer
 import logging
 import jsonlogging
 
@@ -30,6 +30,22 @@ class TeamViewSet(viewsets.ModelViewSet):
         else:
             teams = Team.objects.all().order_by('team_name')
         return teams
+
+class PlayerViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows players to be viewed or edited.
+    """
+
+    queryset = Player.objects.all()
+    serializer_class = PlayerSerializer
+
+    def get_queryset(self):
+        query = self.request.query_params.get('q', None)
+        if query:
+            players = Player.objects.filter(Q(name__icontains=query)).order_by('name')
+        else:
+            players = Player.objects.all().order_by('name')
+        return players
 
 
 class UserViewSet(viewsets.ModelViewSet):
