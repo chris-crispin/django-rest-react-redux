@@ -4,9 +4,9 @@ from api.app.models import Team, Player
 from rest_framework import serializers
 
 class TeamSerializer(serializers.ModelSerializer):
+    players = serializers.StringRelatedField(many=True)
     class Meta:
         model = Team
-        players = serializers.StringRelatedField(many=True)
         fields = ('id', 'team_name', 'stadium_name', 'location', 'players')
 
 class PlayerSerializer(serializers.ModelSerializer):
