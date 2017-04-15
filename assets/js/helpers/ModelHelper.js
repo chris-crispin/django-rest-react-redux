@@ -1,13 +1,11 @@
 import FormValidationHelper from './FormValidationHelper'
 
-export const MODELS = ['users', 'teams']
-
 export const MODEL_HEADERS = {
   'users': ['Name', 'Surname', 'Username', 'Email', 'Active', 'Staff', 'Superuser'],
   'teams': ['Team Name', 'Stadium Name', 'Location']
 }
 
-export const MODEL_DEFAULT = {
+export const MODELS = {
   users: {
     write_only: {
       password: '',
@@ -74,7 +72,8 @@ export const MODEL_FORM = {
     confirmPassword: {
       label: 'Confirm Password',
       type: 'password',
-      validate: FormValidationHelper.validateConfirmPassword
+      validate: FormValidationHelper.validateConfirmPassword,
+      validateArgs: ['password']
     }
   },
   'teams': {

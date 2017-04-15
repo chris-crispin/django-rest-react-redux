@@ -25,16 +25,15 @@ export default class FormHelper {
   }
 
   static validateConfirmPassword (password, originalPassword) {
-    // if (password) {
-    //   if (password.length > 6 &&
-    //     password === originalPassword) {
-    //     return 'success'
-    //   } else {
-    //     return 'error'
-    //   }
-    // }
-    // return 'error'
-    return 'success'
+    if (password) {
+      if (password.length > 6 &&
+        password === originalPassword) {
+        return 'success'
+      } else {
+        return 'error'
+      }
+    }
+    return 'error'
   }
 
   static validateName (name) {

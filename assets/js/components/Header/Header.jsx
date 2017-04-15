@@ -16,7 +16,7 @@ const Header = ({loggedIn, username, logout, model, showModal}) => {
   brand.push(model
     ? <a key={0}>{appName}: <span className='header__brand--span'>{model}</span></a>
     : <a key={0}>{appName}</a>)
-  const models = MODELS.map((model, i) => <MenuItem key={i} eventKey={i} onClick={() => ClientUrlBuilder.searchView('', 1, model)}> {model} </MenuItem>)
+  const models = Object.keys(MODELS).map((model, i) => <MenuItem key={i} eventKey={i} onClick={() => ClientUrlBuilder.searchView('', 1, model)}> {model} </MenuItem>)
 
   return (
     <div className='header'>

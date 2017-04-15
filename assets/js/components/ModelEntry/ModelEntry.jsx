@@ -79,6 +79,11 @@ export class ModelEntry extends React.Component {
           let validate = null
           if (field.validate) {
             validate = field.validate.bind(null, this.state[key])
+            if (field.validateArgs) {
+              field.validateArgs.forEach(arg => {
+                validate = validate.bind(null, this.state[arg])
+              })
+            }
             validateForm.push(validate)
           }
           return <Col key={i} xs={12} sm={8}>
