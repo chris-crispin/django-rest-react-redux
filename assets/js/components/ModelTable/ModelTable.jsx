@@ -5,7 +5,6 @@ import TableRow from '../TableRow/TableRow'
 import Spinner from '../Spinner/Spinner'
 import Pagination from 'react-bootstrap/lib/Pagination'
 import ClientUrlBuilder from '../../helpers/ClientUrlBuilder'
-import { MODEL_HEADERS } from '../../helpers/ModelHelper'
 import PropTypes from 'prop-types'
 
 export class ModelTable extends React.Component {
@@ -27,8 +26,6 @@ export class ModelTable extends React.Component {
   }
 
   render () {
-    const headings = MODEL_HEADERS[this.props.params.model].map(heading => <th key={heading}>{heading}</th>)
-
     let tableRows = []
     if (this.props.entries) {
       tableRows = this.props.entries.map((entry, i) =>
@@ -39,6 +36,8 @@ export class ModelTable extends React.Component {
           handleClick={() => ClientUrlBuilder.editView(this.props.ids[i], this.props.params.model)} />
       )
     }
+
+    const headers = this.props.headers.map(heading => <th key={heading}>{heading}</th>)
 
     return (
       <div>
@@ -57,7 +56,7 @@ export class ModelTable extends React.Component {
                 <Table className='table' striped condensed responsive hover>
                   <thead>
                     <tr>
-                      {headings}
+                      {headers}
                     </tr>
                   </thead>
                   <tbody>
@@ -88,6 +87,7 @@ export class ModelTable extends React.Component {
 
 ModelTable.propTypes = {
   ids: PropTypes.array.isRequired,
+  headers: PropTypes.array.isRequired,
   entries: PropTypes.array.isRequired,
   displayLoader: PropTypes.bool.isRequired,
   pages: PropTypes.number.isRequired,

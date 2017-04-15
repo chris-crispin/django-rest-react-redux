@@ -10,7 +10,7 @@ import ClientUrlBuilder from '../../helpers/ClientUrlBuilder'
 import PropTypes from 'prop-types'
 import FormField from '../FormField/FormField'
 import FormCheckbox from '../FormCheckbox/FormCheckbox'
-import { MODEL_FORM } from '../../helpers/ModelHelper'
+import { MODEL_FORMS } from '../../helpers/ModelHelper'
 
 export class ModelEntry extends React.Component {
 
@@ -67,7 +67,7 @@ export class ModelEntry extends React.Component {
     let validateForm = []
     if (this.props.entry !== null) {
       fields = Object.keys(this.props.entry).map((key, i) => {
-        const field = MODEL_FORM[this.props.params.model][key]
+        const field = MODEL_FORMS[this.props.params.model][key]
         if (field) {
           if (field.type === 'checkbox') {
             return <Col key={i} xs={12} sm={8}>

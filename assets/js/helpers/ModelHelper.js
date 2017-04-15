@@ -1,10 +1,5 @@
 import FormValidationHelper from './FormValidationHelper'
 
-export const MODEL_HEADERS = {
-  'users': ['Name', 'Surname', 'Username', 'Email', 'Active', 'Staff', 'Superuser'],
-  'teams': ['Team Name', 'Stadium Name', 'Location']
-}
-
 export const MODELS = {
   users: {
     write_only: {
@@ -19,6 +14,15 @@ export const MODELS = {
       is_active: true,
       is_staff: false,
       is_superuser: false
+    },
+    table: {
+      first_name: 'Name',
+      last_name: 'Surname',
+      username: 'Username',
+      email: 'Email',
+      is_active: 'Active',
+      is_staff: 'Staff',
+      is_superuser: 'Superuser'
     }
   },
   'teams': {
@@ -26,11 +30,16 @@ export const MODELS = {
       team_name: '',
       stadium_name: '',
       location: ''
+    },
+    table: {
+      team_name: 'Team Name',
+      stadium_name: 'Stadium Name',
+      location: 'Location'
     }
   }
 }
 
-export const MODEL_FORM = {
+export const MODEL_FORMS = {
   'users': {
     first_name: {
       label: 'First Name',
