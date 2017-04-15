@@ -29,8 +29,8 @@ class UserSerializer(serializers.ModelSerializer):
         for field in UserSerializer.Meta.fields:
             if field != 'id' and field in validated_data:
                 setattr(instance, field, validated_data[field])
-        if 'password' in validated_data:
-            instance.set_password(validated_data['password'])
+        # if 'password' in validated_data:
+        #     instance.set_password(validated_data['password'])
         instance.save()
         return instance
 

@@ -1,7 +1,6 @@
 /* global localStorage */
 import request from 'superagent'
 import * as constants from '../actions/constants'
-import {USER_MODEL} from './RouterHelper'
 
 export default class ApiHelper {
 
@@ -30,8 +29,8 @@ export default class ApiHelper {
     })
   }
 
-  static lookup (id) {
-    const url = `/${USER_MODEL}/${id}`
+  static lookup (id, model) {
+    const url = `/${model}/${id}`
     return new Promise((resolve) => {
       request
         .get(url)
@@ -51,8 +50,8 @@ export default class ApiHelper {
     })
   }
 
-  static delete (id) {
-    const url = `/${USER_MODEL}/${id}`
+  static delete (id, model) {
+    const url = `/${model}/${id}`
     return new Promise((resolve) => {
       request
         .delete(url)
@@ -68,19 +67,9 @@ export default class ApiHelper {
     })
   }
 
-  static put (id, username, state) {
-    const url = `/${USER_MODEL}/${id}/`
-    const payload = {
-      id: id,
-      first_name: state.firstName,
-      last_name: state.lastName,
-      username: state.user,
-      email: state.email,
-      user_last_modified: username,
-      is_active: state.isActive !== 'undefined' ? state.isActive : false,
-      is_staff: state.isStaff !== 'undefined' ? state.isStaff : false,
-      is_superuser: state.isSuper !== 'undefined' ? state.isSuper : false
-    }
+  static put (id, username, state, model) {
+    const url = `/${model}/${id}/`
+    const payload = {...state}
     return new Promise((resolve) => {
       request
         .put(url)
@@ -102,21 +91,9 @@ export default class ApiHelper {
     })
   }
 
-  static post (username, state) {
-    const url = `/${USER_MODEL}/`
-    const payload = {
-      first_name: state.firstName,
-      last_name: state.lastName,
-      username: state.user,
-      email: state.email,
-      user_added: username,
-      user_last_modified: username,
-      is_active: state.isActive !== 'undefined' ? state.isActive : false,
-      is_staff: state.isStaff !== 'undefined' ? state.isStaff : false,
-      is_superuser: state.isSuper !== 'undefined' ? state.isSuper : false,
-      password: state.password
-    }
-
+  static post (username, state, model) {
+    const url = `/${model}/`
+    const payload = {...state}
     return new Promise((resolve) => {
       request
         .post(url)

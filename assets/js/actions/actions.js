@@ -62,10 +62,10 @@ export const search = (searchTerm, page, model) => {
   }
 }
 
-export const lookup = (id) => {
+export const lookup = (id, model) => {
   return function (dispatch) {
     dispatch(showLoader())
-    return ApiHelper.lookup(id)
+    return ApiHelper.lookup(id, model)
             .then((response) => {
               if (response.statusCode === 401) {
                 logout()
@@ -82,7 +82,7 @@ export const safeDelete = (id, model) => {
   return function (dispatch) {
     dispatch(showLoader())
 
-    return ApiHelper.delete(id)
+    return ApiHelper.delete(id, model)
             .then((response) => {
               if (response.statusCode === 401) {
                 logout()
@@ -96,11 +96,11 @@ export const safeDelete = (id, model) => {
   }
 }
 
-export const put = (id, firstName, lastName, user, email, username) => {
+export const put = (id, username, state, model) => {
   return function (dispatch) {
     dispatch(showLoader())
 
-    return ApiHelper.put(id, firstName, lastName, user, email, username)
+    return ApiHelper.put(id, username, state, model)
             .then((response) => {
               if (response.statusCode === 401) {
                 logout()
@@ -109,16 +109,16 @@ export const put = (id, firstName, lastName, user, email, username) => {
               }
               dispatch(populateSearchResults([response]))
               dispatch(hideLoader())
-              browserHistory.push(`/app/users/entry/${id}`)
+              browserHistory.push(`/app/${model}/entry/${id}`)
             })
   }
 }
 
-export const post = (firstName, lastName, user, email, username) => {
+export const post = (username, state, model) => {
   return function (dispatch) {
     dispatch(showLoader())
 
-    return ApiHelper.post(firstName, lastName, user, email, username)
+    return ApiHelper.post(username, state, model)
             .then((response) => {
               if (response.statusCode === 401) {
                 logout()
@@ -128,7 +128,7 @@ export const post = (firstName, lastName, user, email, username) => {
               dispatch(populateSearchResults([response]))
               dispatch(hideLoader())
               const id = response.id
-              browserHistory.push(`/app/users/entry/${id}`)
+              browserHistory.push(`/app/${model}/entry/${id}`)
             })
   }
 }
