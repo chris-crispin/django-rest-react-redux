@@ -46,7 +46,8 @@ export const MODELS = {
     table: {
       name: 'Name',
       position: 'Position',
-      nationality: 'Nationality'
+      nationality: 'Nationality',
+      team: 'Team'
     }
   }
 }
