@@ -36,6 +36,18 @@ export const MODELS = {
       stadium_name: 'Stadium Name',
       location: 'Location'
     }
+  },
+  'players': {
+    default: {
+      name: '',
+      position: '',
+      nationality: ''
+    },
+    table: {
+      name: 'Name',
+      position: 'Position',
+      nationality: 'Nationality'
+    }
   }
 }
 
@@ -58,20 +70,23 @@ export const MODEL_FORMS = {
     },
     email: {
       label: 'Email',
-      type: 'text',
+      type: 'email',
       validate: FormValidationHelper.validateEmail
     },
     is_active: {
       label: 'Active',
-      type: 'checkbox'
+      type: 'checkbox',
+      readOnly: true
     },
     is_staff: {
       label: 'Staff',
-      type: 'checkbox'
+      type: 'checkbox',
+      readOnly: true
     },
     is_superuser: {
       label: 'Superuser',
-      type: 'checkbox'
+      type: 'checkbox',
+      readOnly: true
     },
     password: {
       label: 'Password',
@@ -94,6 +109,25 @@ export const MODEL_FORMS = {
     },
     location: {
       label: 'Location'
+    },
+    players: {
+      label: 'Players',
+      readOnly: true
+    }
+  },
+  'players': {
+    name: {
+      label: 'Name'
+    },
+    position: {
+      label: 'Position'
+    },
+    nationality: {
+      label: 'Nationality'
+    },
+    team: {
+      label: 'Team',
+      readOnly: true
     }
   }
 }
