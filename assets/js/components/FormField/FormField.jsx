@@ -5,11 +5,19 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel'
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const FormField = ({label, type, value, helpText, onChange, validate}) => {
+const FormField = ({label, type, value, helpText, onChange, validate, isReadOnly}) => {
   const _onChange = (e) => {
     if (onChange) {
       onChange(e)
     }
+  }
+  const readOnly = isReadOnly ? 'readOnly' : false
+  let values = null
+  if (Array.isArray(value)) {
+    values = ''
+    value.forEach((item, i) => {
+      values += `${i + 1}. ${item} `
+    })
   }
 
   return (
@@ -18,8 +26,9 @@ const FormField = ({label, type, value, helpText, onChange, validate}) => {
         <FormGroup bsSize='sm' validationState={validate()}>
           <ControlLabel>{label}</ControlLabel>
           <FormControl
+            readOnly={readOnly}
             type={type || 'text'}
-            value={value}
+            value={values || value}
             onChange={(e) => _onChange(e)} />
           <FormControl.Feedback />
           { helpText &&
@@ -30,8 +39,9 @@ const FormField = ({label, type, value, helpText, onChange, validate}) => {
         <FormGroup bsSize='sm'>
           <ControlLabel>{label}</ControlLabel>
           <FormControl
+            readOnly={readOnly}
             type={type || 'text'}
-            value={value}
+            value={values || value}
             onChange={(e) => _onChange(e)} />
           <FormControl.Feedback />
           { helpText &&

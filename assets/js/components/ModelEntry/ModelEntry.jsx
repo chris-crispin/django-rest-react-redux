@@ -71,7 +71,9 @@ export class ModelEntry extends React.Component {
         if (field) {
           if (field.type === 'checkbox') {
             return <Col key={i} xs={12} sm={8}>
-              <FormCheckbox label={field.label}
+              <FormCheckbox
+                isReadOnly={field.readOnly}
+                label={field.label}
                 value={this.state[key]}
                 onChange={this._onChangeHandler.bind(this, key)} />
             </Col>
@@ -88,6 +90,7 @@ export class ModelEntry extends React.Component {
           }
           return <Col key={i} xs={12} sm={8}>
             <FormField label={field.label}
+              isReadOnly={field.readOnly}
               type={field.type}
               validate={validate}
               value={this.state[key]}
