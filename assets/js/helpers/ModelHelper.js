@@ -77,7 +77,7 @@ export const MODEL_FORMS = {
     is_active: {
       label: 'Active',
       type: 'checkbox',
-      readOnly: true
+      readOnly: false
     },
     is_staff: {
       label: 'Staff',

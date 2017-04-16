@@ -10,7 +10,7 @@ const FormCheckbox = ({label, value, onChange, isReadOnly}) => {
     }
   }
 
-  const readOnly = isReadOnly ? 'disabled' : false
+  const readOnly = isReadOnly || false
 
   return (
     <FormGroup bsSize='sm'>
