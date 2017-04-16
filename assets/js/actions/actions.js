@@ -1,6 +1,6 @@
 import * as constants from './constants'
 import ApiHelper from '../helpers/ApiHelper'
-import { browserHistory } from 'react-router'
+import browserHistory from 'react-router/lib/browserHistory'
 import ClientUrlBuilder from '../helpers/ClientUrlBuilder'
 import { logout } from '../auth'
 

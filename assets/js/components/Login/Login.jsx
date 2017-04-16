@@ -13,7 +13,7 @@ import Jumbotron from 'react-bootstrap/lib/Jumbotron'
 import Panel from 'react-bootstrap/lib/Panel'
 import './styles.scss'
 import ConnectedHeader from '../../containers/ConnectedHeader'
-import { browserHistory } from 'react-router'
+import browserHistory from 'react-router/lib/browserHistory'
 
 export class Login extends React.Component {
 

@@ -1,4 +1,4 @@
-import { browserHistory } from 'react-router'
+import browserHistory from 'react-router/lib/browserHistory'
 import {BASE_URL} from './RouterHelper'
 
 export default class ClientUrlBuilder {
