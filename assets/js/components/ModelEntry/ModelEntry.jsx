@@ -23,7 +23,10 @@ export class ModelEntry extends React.Component {
 
   _update (props) {
     if (props.params.id !== 'add') {
-      this.props.lookup(props.params.id, props.params.model)
+      props.lookup(props.params.id, props.params.model)
+    }
+    if (props.foreignKey) {
+      props.getForeignKeys(props.foreignKey, props.foreignKeyField)
     }
   }
 
@@ -148,7 +151,9 @@ export class ModelEntry extends React.Component {
 ModelEntry.propTypes = {
   entry: PropTypes.object.isRequired,
   id: PropTypes.number,
-  displayLoader: PropTypes.bool.isRequired
+  displayLoader: PropTypes.bool.isRequired,
+  foreignKey: PropTypes.string,
+  foreignKeyField: PropTypes.string
 }
 
 export default ModelEntry

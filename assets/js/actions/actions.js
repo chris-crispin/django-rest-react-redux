@@ -43,6 +43,13 @@ export const populateSearchResults = (result, pages, page) => {
   })
 }
 
+export const populateForeignKeyResults = (result) => {
+  return ({
+    type: constants.POPULATE_FOREIGN_KEY,
+    payload: { result: result }
+  })
+}
+
 export const search = (searchTerm, page, model) => {
   return function (dispatch) {
     dispatch(showLoader())
@@ -57,6 +64,27 @@ export const search = (searchTerm, page, model) => {
               const result = response.results
               const count = response.count
               dispatch(populateSearchResults(result, Math.floor(count / constants.PAGE_LIMIT) + 1, page))
+              dispatch(hideLoader())
+            })
+  }
+}
+
+export const getForeignKeys = (model, field) => {
+  return function (dispatch) {
+    dispatch(showLoader())
+
+    return ApiHelper.search('', 1, model)
+            .then((response) => {
+              if (response.statusCode === 401) {
+                logout()
+                dispatch(hideLoader())
+                return
+              }
+              const foreignMap = {}
+              response.results.forEach(result => {
+                foreignMap[result[field]] = result.id
+              })
+              dispatch(populateForeignKeyResults(foreignMap))
               dispatch(hideLoader())
             })
   }

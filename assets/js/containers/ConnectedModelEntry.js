@@ -4,6 +4,7 @@ import ModelEntry from '../components/ModelEntry/ModelEntry'
 import { MODELS } from '../helpers/ModelHelper'
 
 function mapStateToProps (state, ownProps) {
+  const model = MODELS[ownProps.params.model]
   if (ownProps.params.id !== 'add') {
     if (state.entries !== undefined && state.entries.length === 1) {
       return {
@@ -14,13 +15,15 @@ function mapStateToProps (state, ownProps) {
     } else {
       return {
         displayLoader: true,
-        entry: MODELS[ownProps.params.model].default,
-        id: parseInt(ownProps.params.id, 10)
+        entry: model.default,
+        id: parseInt(ownProps.params.id, 10),
+        foreignKey: model.foreignKey ? model.foreignKey.model : null,
+        foreignKeyField: model.foreignKey ? model.foreignKey.field : null
       }
     }
   } else {
-    const writeOnly = MODELS[ownProps.params.model].write_only
-    const readWrite = MODELS[ownProps.params.model].default
+    const writeOnly = model.write_only
+    const readWrite = model.default
     const entry = writeOnly ? {...readWrite, ...writeOnly} : readWrite
     return {
       displayLoader: false,

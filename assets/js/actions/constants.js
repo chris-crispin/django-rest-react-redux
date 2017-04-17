@@ -11,5 +11,6 @@ export const POPULATE = 'POPULATE'
 export const PUT = 'PUT'
 export const POST = 'POST'
 export const CLEAR = 'CLEAR'
+export const POPULATE_FOREIGN_KEY = 'POPULATE_FOREIGN_KEY'
 
 export const PAGE_LIMIT = 12

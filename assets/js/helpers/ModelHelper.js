@@ -41,13 +41,18 @@ export const MODELS = {
     default: {
       name: '',
       position: '',
-      nationality: ''
+      nationality: '',
+      team: ''
     },
     table: {
       name: 'Name',
       position: 'Position',
       nationality: 'Nationality',
       team: 'Team'
+    },
+    foreignKey: {
+      model: 'teams',
+      field: 'team_name'
     }
   }
 }
@@ -127,8 +132,7 @@ export const MODEL_FORMS = {
       label: 'Nationality'
     },
     team: {
-      label: 'Team',
-      readOnly: true
+      label: 'Team'
     }
   }
 }
