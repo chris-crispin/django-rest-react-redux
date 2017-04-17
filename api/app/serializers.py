@@ -10,7 +10,7 @@ class TeamSerializer(serializers.ModelSerializer):
         fields = ('id', 'team_name', 'stadium_name', 'location', 'players')
 
 class PlayerSerializer(serializers.ModelSerializer):
-    team = serializers.StringRelatedField()
+    # team = serializers.StringRelatedField()
     class Meta:
         model = Player
         fields = ('id', 'name', 'team', 'position', 'nationality')

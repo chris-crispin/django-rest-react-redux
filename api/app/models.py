@@ -5,7 +5,7 @@ from django.db import models
 POSITIONS = ('GoalKeeper', 'Defender', 'Midfielder', 'Forward')
 
 class Team(models.Model):
-    team_name = models.CharField(max_length=100)
+    team_name = models.CharField(max_length=100, unique=True)
     stadium_name = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
 

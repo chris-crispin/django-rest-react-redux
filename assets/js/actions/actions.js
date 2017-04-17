@@ -82,7 +82,7 @@ export const getForeignKeys = (model, field) => {
               }
               const foreignMap = {}
               response.results.forEach(result => {
-                foreignMap[result[field]] = result.id
+                foreignMap[result.id] = result[field]
               })
               dispatch(populateForeignKeyResults(foreignMap))
               dispatch(hideLoader())

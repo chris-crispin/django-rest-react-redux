@@ -78,7 +78,8 @@ export class ModelEntry extends React.Component {
               <FormSelectField
                 label={field.label}
                 value={this.state[key]}
-                values={this.props.foreignKeys} />
+                values={this.props.foreignKeys}
+                onChange={this._onChangeHandler.bind(this, key)} />
             </Col>
           }
           if (field.type === 'checkbox') {
