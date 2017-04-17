@@ -51,8 +51,9 @@ export const MODELS = {
       team: 'Team'
     },
     foreignKey: {
+      field: 'team',
       model: 'teams',
-      field: 'team_name'
+      foreignField: 'team_name'
     }
   }
 }
@@ -132,7 +133,8 @@ export const MODEL_FORMS = {
       label: 'Nationality'
     },
     team: {
-      label: 'Team'
+      label: 'Team',
+      foreignKey: true
     }
   }
 }

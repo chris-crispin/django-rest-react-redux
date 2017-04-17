@@ -9,6 +9,7 @@ import Spinner from '../Spinner/Spinner'
 import ClientUrlBuilder from '../../helpers/ClientUrlBuilder'
 import PropTypes from 'prop-types'
 import FormField from '../FormField/FormField'
+import FormSelectField from '../FormSelectField/FormSelectField'
 import FormCheckbox from '../FormCheckbox/FormCheckbox'
 import { MODEL_FORMS } from '../../helpers/ModelHelper'
 
@@ -72,6 +73,14 @@ export class ModelEntry extends React.Component {
       fields = Object.keys(this.props.entry).map((key, i) => {
         const field = MODEL_FORMS[this.props.params.model][key]
         if (field) {
+          if (field.foreignKey) {
+            return <Col key={i} xs={12} sm={8}>
+              <FormSelectField
+                label={field.label}
+                value={this.state[key]}
+                values={this.props.foreignKeys} />
+            </Col>
+          }
           if (field.type === 'checkbox') {
             return <Col key={i} xs={12} sm={8}>
               <FormCheckbox
@@ -153,7 +162,8 @@ ModelEntry.propTypes = {
   id: PropTypes.number,
   displayLoader: PropTypes.bool.isRequired,
   foreignKey: PropTypes.string,
-  foreignKeyField: PropTypes.string
+  foreignKeyField: PropTypes.string,
+  foreignKeys: PropTypes.object
 }
 
 export default ModelEntry

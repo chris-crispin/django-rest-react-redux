@@ -10,7 +10,10 @@ function mapStateToProps (state, ownProps) {
       return {
         displayLoader: state.displayLoader === undefined ? true : state.displayLoader,
         entry: state.entries[0],
-        id: parseInt(ownProps.params.id, 10)
+        id: parseInt(ownProps.params.id, 10),
+        foreignKey: model.foreignKey ? model.foreignKey.model : null,
+        foreignKeyField: model.foreignKey ? model.foreignKey.foreignField : null,
+        foreignKeys: state.foreignKeys
       }
     } else {
       return {
@@ -18,7 +21,8 @@ function mapStateToProps (state, ownProps) {
         entry: model.default,
         id: parseInt(ownProps.params.id, 10),
         foreignKey: model.foreignKey ? model.foreignKey.model : null,
-        foreignKeyField: model.foreignKey ? model.foreignKey.field : null
+        foreignKeyField: model.foreignKey ? model.foreignKey.foreignField : null,
+        foreignKeys: state.foreignKeys
       }
     }
   } else {
