@@ -18,9 +18,10 @@ class Player(models.Model):
     name = models.CharField(max_length=100)
     nationality = models.CharField(max_length=100)
     position = models.CharField(choices=POSITIONS, max_length=100)
+    shirt_number = models.CharField(max_length=2)
 
     class Meta:
         unique_together = ('team', 'name')
 
     def __unicode__(self):
-        return '{0}'.format(self.name)
+        return '{0}. {1}'.format(self.shirt_number, self.name)

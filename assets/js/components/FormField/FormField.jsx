@@ -12,13 +12,6 @@ const FormField = ({label, type, value, helpText, onChange, validate, isReadOnly
     }
   }
   const readOnly = isReadOnly ? 'readOnly' : false
-  let values = null
-  if (Array.isArray(value)) {
-    values = ''
-    value.forEach((item, i) => {
-      values += `${i + 1}. ${item} `
-    })
-  }
 
   return (
     <div>
@@ -28,7 +21,7 @@ const FormField = ({label, type, value, helpText, onChange, validate, isReadOnly
           <FormControl
             readOnly={readOnly}
             type={type || 'text'}
-            value={values || value}
+            value={value}
             onChange={(e) => _onChange(e)} />
           <FormControl.Feedback />
           { helpText &&
@@ -41,7 +34,7 @@ const FormField = ({label, type, value, helpText, onChange, validate, isReadOnly
           <FormControl
             readOnly={readOnly}
             type={type || 'text'}
-            value={values || value}
+            value={value}
             onChange={(e) => _onChange(e)} />
           <FormControl.Feedback />
           { helpText &&

@@ -135,6 +135,9 @@ export const MODEL_FORMS = {
     team: {
       label: 'Team',
       foreignKey: true
+    },
+    shirt_number: {
+      label: 'Number'
     }
   }
 }
