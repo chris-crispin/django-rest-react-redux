@@ -1,27 +1,29 @@
 import {connect} from 'react-redux'
 import * as actions from '../actions/actions'
 import ModelTable from '../components/ModelTable/ModelTable'
+import { MODELS } from '../helpers/ModelHelper'
 
-function mapStateToProps (state) {
+function mapStateToProps (state, ownProps) {
   const ids = []
-  const values = []
+  const entries = []
   if (state.entries) {
     state.entries.forEach(entry => {
-      values.push([entry.first_name + ' ' + entry.last_name,
-        entry.username,
-        entry.email,
-        entry.is_active,
-        entry.is_staff,
-        entry.is_superuser])
+      const values = []
+      Object.keys(MODELS[ownProps.params.model].table).forEach(field => {
+        values.push(entry[field])
+      })
+      entries.push(values)
       ids.push(entry.id)
     })
   }
   return {
     ids: ids,
-    entries: values,
+    entries: entries,
     displayLoader: state.displayLoader || false,
     pages: state.pages || 1,
-    page: state.page || 1
+    page: state.page || 1,
+    headers: Object.values(MODELS[ownProps.params.model].table)
+
   }
 }
 

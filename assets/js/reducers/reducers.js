@@ -47,6 +47,11 @@ export default (state, action) => {
         page: action.payload.page
 
       }
+    case constants.POPULATE_FOREIGN_KEY:
+      return {
+        ...state,
+        foreignKeys: action.payload.result
+      }
     default:
       return state
   }

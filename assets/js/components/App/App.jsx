@@ -19,7 +19,7 @@ export class App extends React.Component {
 
   _onSubmit (e) {
     e.preventDefault()
-    ClientUrlBuilder.searchUserView(this.state.searchTerm, 1)
+    ClientUrlBuilder.searchView(this.state.searchTerm, 1, this.props.params.model)
   }
 
   componentWillUpdate (nextProps) {
@@ -33,7 +33,7 @@ export class App extends React.Component {
     return (
       <div className='page'>
         <ConnectedHeader
-          model={'Users'}
+          model={this.props.params.model}
           username={this.props.username}
           loggedIn
           logout={logout} />
@@ -41,9 +41,9 @@ export class App extends React.Component {
           <ToolBar
             onChange={(e) => this.setState({searchTerm: e.target.value})}
             onSubmit={this._onSubmit.bind(this)}
-            clearSearch={ClientUrlBuilder.searchUserView.bind(null, '', 1)}
+            clearSearch={ClientUrlBuilder.searchView.bind(null, '', 1, this.props.params.model)}
             searchTerm={this.state.searchTerm}
-            goToAddView={ClientUrlBuilder.addUserView} />
+            goToAddView={() => ClientUrlBuilder.addView(this.props.params.model)} />
 
           {this.props.modelView}
           <ConnectedAboutModal />

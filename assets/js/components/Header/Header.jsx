@@ -7,13 +7,17 @@ import MenuItem from 'react-bootstrap/lib/MenuItem'
 import NavDropdown from 'react-bootstrap/lib/NavDropdown'
 import Nav from 'react-bootstrap/lib/Nav'
 import PropTypes from 'prop-types'
+import { MODELS } from '../../helpers/ModelHelper'
+import ClientUrlBuilder from '../../helpers/ClientUrlBuilder'
 
 const Header = ({loggedIn, username, logout, model, showModal}) => {
   const appName = 'django-rest-react-redux'
-  let brand = []
+  const brand = []
   brand.push(model
     ? <a key={0}>{appName}: <span className='header__brand--span'>{model}</span></a>
     : <a key={0}>{appName}</a>)
+  const models = Object.keys(MODELS).map((model, i) => <MenuItem key={i} eventKey={i} onClick={() => ClientUrlBuilder.searchView('', 1, model)}> {model} </MenuItem>)
+
   return (
     <div className='header'>
       <Navbar inverse collapseOnSelect className='header__navbar'>
@@ -29,11 +33,7 @@ const Header = ({loggedIn, username, logout, model, showModal}) => {
             {
               loggedIn &&
               <NavDropdown id={'models'} eventKey={2} title='Models'>
-                <MenuItem eventKey={2.1}>Users</MenuItem>
-                <MenuItem eventKey={2.2}>Groups</MenuItem>
-                <MenuItem divider />
-                <MenuItem eventKey={2.3}>Players</MenuItem>
-                <MenuItem eventKey={2.3}>Teams</MenuItem>
+                {models}
               </NavDropdown>
             }
           </Nav>

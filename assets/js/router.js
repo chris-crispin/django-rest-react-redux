@@ -1,6 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
+import Router from 'react-router/lib/Router'
+import Route from 'react-router/lib/Route'
+import IndexRedirect from 'react-router/lib/IndexRedirect'
+import browserHistory from 'react-router/lib/browserHistory'
 import ConnectedApp from './containers/ConnectedApp'
 import ConnectedLogin from './containers/ConnectedLogin'
 import NotFound from './components/NotFound/NotFound'
@@ -28,7 +31,7 @@ ReactDOM.render(
       <Route path={BASE_URL}>
         <IndexRedirect to={USER_MODEL} />
         <Route path='login' component={ConnectedLogin} />
-        <Route path={USER_MODEL} component={ConnectedApp} onEnter={requireAuth}>
+        <Route path={':model'} component={ConnectedApp} onEnter={requireAuth}>
           <IndexRedirect to='search/1' />
           <Route path='search/:page' components={{modelView: ConnectedModelTable}} />
           <Route path='search/:searchTerm/:page' components={{modelView: ConnectedModelTable}} />

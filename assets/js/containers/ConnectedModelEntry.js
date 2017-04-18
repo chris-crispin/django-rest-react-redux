@@ -1,45 +1,37 @@
 import { connect } from 'react-redux'
 import * as actions from '../actions/actions'
 import ModelEntry from '../components/ModelEntry/ModelEntry'
+import { MODELS } from '../helpers/ModelHelper'
 
 function mapStateToProps (state, ownProps) {
+  const model = MODELS[ownProps.params.model]
   if (ownProps.params.id !== 'add') {
-    if (state.entries) {
+    if (state.entries !== undefined && state.entries.length === 1) {
       return {
         displayLoader: state.displayLoader === undefined ? true : state.displayLoader,
-        entries: state.entries,
-        firstName: state.entries[0].first_name,
-        lastName: state.entries[0].last_name,
-        user: state.entries[0].username,
-        email: state.entries[0].email,
-        isActive: state.entries[0].is_active,
-        isStaff: state.entries[0].is_staff,
-        isSuper: state.entries[0].is_superuser,
-        id: parseInt(ownProps.params.id, 10)
+        entry: state.entries[0],
+        id: parseInt(ownProps.params.id, 10),
+        foreignKey: model.foreignKey ? model.foreignKey.model : null,
+        foreignKeyField: model.foreignKey ? model.foreignKey.foreignField : null,
+        foreignKeys: state.foreignKeys
       }
     } else {
       return {
         displayLoader: true,
-        firstName: '',
-        lastName: '',
-        user: '',
-        email: '',
-        isActive: true,
-        isStaff: false,
-        isSuper: false,
-        id: parseInt(ownProps.params.id, 10)
+        entry: model.default,
+        id: parseInt(ownProps.params.id, 10),
+        foreignKey: model.foreignKey ? model.foreignKey.model : null,
+        foreignKeyField: model.foreignKey ? model.foreignKey.foreignField : null,
+        foreignKeys: state.foreignKeys
       }
     }
   } else {
+    const writeOnly = model.write_only
+    const readWrite = model.default
+    const entry = writeOnly ? {...readWrite, ...writeOnly} : readWrite
     return {
       displayLoader: false,
-      firstName: '',
-      lastName: '',
-      user: '',
-      email: '',
-      isActive: true,
-      isStaff: false,
-      isSuper: false
+      entry: entry
     }
   }
 }

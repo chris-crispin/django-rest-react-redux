@@ -1,6 +1,6 @@
 import * as constants from './constants'
 import ApiHelper from '../helpers/ApiHelper'
-import { browserHistory } from 'react-router'
+import browserHistory from 'react-router/lib/browserHistory'
 import ClientUrlBuilder from '../helpers/ClientUrlBuilder'
 import { logout } from '../auth'
 
@@ -43,11 +43,18 @@ export const populateSearchResults = (result, pages, page) => {
   })
 }
 
-export const search = (searchTerm, page) => {
+export const populateForeignKeyResults = (result) => {
+  return ({
+    type: constants.POPULATE_FOREIGN_KEY,
+    payload: { result: result }
+  })
+}
+
+export const search = (searchTerm, page, model) => {
   return function (dispatch) {
     dispatch(showLoader())
 
-    return ApiHelper.search(searchTerm || '', page || 1)
+    return ApiHelper.search(searchTerm || '', page || 1, model)
             .then((response) => {
               if (response.statusCode === 401) {
                 logout()
@@ -62,10 +69,31 @@ export const search = (searchTerm, page) => {
   }
 }
 
-export const lookup = (id) => {
+export const getForeignKeys = (model, field) => {
   return function (dispatch) {
     dispatch(showLoader())
-    return ApiHelper.lookup(id)
+
+    return ApiHelper.search('', 1, model)
+            .then((response) => {
+              if (response.statusCode === 401) {
+                logout()
+                dispatch(hideLoader())
+                return
+              }
+              const foreignMap = {}
+              response.results.forEach(result => {
+                foreignMap[result.id] = result[field]
+              })
+              dispatch(populateForeignKeyResults(foreignMap))
+              dispatch(hideLoader())
+            })
+  }
+}
+
+export const lookup = (id, model) => {
+  return function (dispatch) {
+    dispatch(showLoader())
+    return ApiHelper.lookup(id, model)
             .then((response) => {
               if (response.statusCode === 401) {
                 logout()
@@ -78,11 +106,11 @@ export const lookup = (id) => {
   }
 }
 
-export const safeDelete = (id) => {
+export const safeDelete = (id, model) => {
   return function (dispatch) {
     dispatch(showLoader())
 
-    return ApiHelper.delete(id)
+    return ApiHelper.delete(id, model)
             .then((response) => {
               if (response.statusCode === 401) {
                 logout()
@@ -90,17 +118,17 @@ export const safeDelete = (id) => {
                 return
               }
               dispatch(hideLoader())
-              ClientUrlBuilder.searchUserView('', 1)
+              ClientUrlBuilder.searchView('', 1, model)
               dispatch(showInfoModal(response.msg))
             })
   }
 }
 
-export const put = (id, firstName, lastName, user, email, username) => {
+export const put = (id, username, state, model) => {
   return function (dispatch) {
     dispatch(showLoader())
 
-    return ApiHelper.put(id, firstName, lastName, user, email, username)
+    return ApiHelper.put(id, username, state, model)
             .then((response) => {
               if (response.statusCode === 401) {
                 logout()
@@ -109,16 +137,16 @@ export const put = (id, firstName, lastName, user, email, username) => {
               }
               dispatch(populateSearchResults([response]))
               dispatch(hideLoader())
-              browserHistory.push(`/app/users/entry/${id}`)
+              browserHistory.push(`/app/${model}/entry/${id}`)
             })
   }
 }
 
-export const post = (firstName, lastName, user, email, username) => {
+export const post = (username, state, model) => {
   return function (dispatch) {
     dispatch(showLoader())
 
-    return ApiHelper.post(firstName, lastName, user, email, username)
+    return ApiHelper.post(username, state, model)
             .then((response) => {
               if (response.statusCode === 401) {
                 logout()
@@ -128,7 +156,7 @@ export const post = (firstName, lastName, user, email, username) => {
               dispatch(populateSearchResults([response]))
               dispatch(hideLoader())
               const id = response.id
-              browserHistory.push(`/app/users/entry/${id}`)
+              browserHistory.push(`/app/${model}/entry/${id}`)
             })
   }
 }
