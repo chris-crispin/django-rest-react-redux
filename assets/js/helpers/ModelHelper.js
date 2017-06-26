@@ -1,5 +1,10 @@
 import FormValidationHelper from './FormValidationHelper'
 
+export const URLS = {
+  host: 'http://localhost',
+  port: '8000'
+}
+
 export const MODELS = {
   users: {
     write_only: {
