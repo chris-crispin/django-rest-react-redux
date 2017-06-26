@@ -61,4 +61,8 @@ export default class FormHelper {
       return 'error'
     }
   }
+
+  static isDefined (value) {
+    return value !== undefined ? 'success' : 'error'
+  }
 }

@@ -26,9 +26,10 @@ export class ModelEntry extends React.Component {
     if (props.params.id !== 'add') {
       props.lookup(props.params.id, props.params.model)
     }
-    if (props.foreignKey) {
-      props.getForeignKeys(props.foreignKey, props.foreignKeyField)
-    }
+  }
+
+  _searchSelections (searchTerm) {
+    this.props.getForeignKeys(this.props.foreignKey, this.props.foreignKeyField, searchTerm)
   }
 
   componentDidMount () {
@@ -41,6 +42,12 @@ export class ModelEntry extends React.Component {
     }
     if (this.props.entry !== nextProps.entry) {
       this.setState({...nextProps.entry})
+      if (this.props.foreignKey) {
+        this.props.getForeignKey(nextProps.foreignKey, nextProps.foreignKeyField, nextProps.entry[nextProps.foreignField])
+      }
+    }
+    if (nextProps.foreignKeys && this.props.foreignKeys !== nextProps.foreignKeys) {
+      this.setState({[this.props.foreignField]: Object.keys(nextProps.foreignKeys)[0]})
     }
   }
 
@@ -73,13 +80,25 @@ export class ModelEntry extends React.Component {
       fields = Object.keys(this.props.entry).map((key, i) => {
         const field = MODEL_FORMS[this.props.params.model][key]
         if (field) {
+          let validate = null
+          if (field.validate) {
+            validate = field.validate.bind(null, this.state[key])
+            if (field.validateArgs) {
+              field.validateArgs.forEach(arg => {
+                validate = validate.bind(null, this.state[arg])
+              })
+            }
+            validateForm.push(validate)
+          }
           if (field.foreignKey) {
             return <Col key={i} xs={12} sm={8}>
               <FormSelectField
                 label={field.label}
                 value={this.state[key]}
                 values={this.props.foreignKeys}
-                onChange={this._onChangeHandler.bind(this, key)} />
+                validate={validate}
+                onChange={this._onChangeHandler.bind(this, key)}
+                searchSelections={this.props.foreignKey ? this._searchSelections.bind(this) : null} />
             </Col>
           }
           if (field.type === 'checkbox') {
@@ -90,16 +109,6 @@ export class ModelEntry extends React.Component {
                 value={this.state[key]}
                 onChange={this._onChangeHandler.bind(this, key)} />
             </Col>
-          }
-          let validate = null
-          if (field.validate) {
-            validate = field.validate.bind(null, this.state[key])
-            if (field.validateArgs) {
-              field.validateArgs.forEach(arg => {
-                validate = validate.bind(null, this.state[arg])
-              })
-            }
-            validateForm.push(validate)
           }
           return <Col key={i} xs={12} sm={8}>
             <FormField label={field.label}
@@ -162,6 +171,7 @@ ModelEntry.propTypes = {
   entry: PropTypes.object.isRequired,
   id: PropTypes.number,
   displayLoader: PropTypes.bool.isRequired,
+  foreignField: PropTypes.string,
   foreignKey: PropTypes.string,
   foreignKeyField: PropTypes.string,
   foreignKeys: PropTypes.object

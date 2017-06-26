@@ -69,11 +69,28 @@ export const search = (searchTerm, page, model) => {
   }
 }
 
-export const getForeignKeys = (model, field) => {
+export const getForeignKeys = (model, field, searchTerm) => {
+  return function (dispatch) {
+    return ApiHelper.search(searchTerm, 1, model)
+            .then((response) => {
+              if (response.statusCode === 401) {
+                logout()
+                return
+              }
+              const foreignMap = {}
+              response.results.forEach(result => {
+                foreignMap[result.id] = result[field]
+              })
+              dispatch(populateForeignKeyResults(foreignMap))
+            })
+  }
+}
+
+export const getForeignKey = (model, field, id) => {
   return function (dispatch) {
     dispatch(showLoader())
 
-    return ApiHelper.search('', 1, model)
+    return ApiHelper.lookup(id, model)
             .then((response) => {
               if (response.statusCode === 401) {
                 logout()
@@ -81,9 +98,7 @@ export const getForeignKeys = (model, field) => {
                 return
               }
               const foreignMap = {}
-              response.results.forEach(result => {
-                foreignMap[result.id] = result[field]
-              })
+              foreignMap[id] = response[field]
               dispatch(populateForeignKeyResults(foreignMap))
               dispatch(hideLoader())
             })

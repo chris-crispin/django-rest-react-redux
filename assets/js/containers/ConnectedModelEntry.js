@@ -11,6 +11,7 @@ function mapStateToProps (state, ownProps) {
         displayLoader: state.displayLoader === undefined ? true : state.displayLoader,
         entry: state.entries[0],
         id: parseInt(ownProps.params.id, 10),
+        foreignField: model.foreignKey ? model.foreignKey.field : null,
         foreignKey: model.foreignKey ? model.foreignKey.model : null,
         foreignKeyField: model.foreignKey ? model.foreignKey.foreignField : null,
         foreignKeys: state.foreignKeys
@@ -20,6 +21,7 @@ function mapStateToProps (state, ownProps) {
         displayLoader: true,
         entry: model.default,
         id: parseInt(ownProps.params.id, 10),
+        foreignField: model.foreignKey ? model.foreignKey.field : null,
         foreignKey: model.foreignKey ? model.foreignKey.model : null,
         foreignKeyField: model.foreignKey ? model.foreignKey.foreignField : null,
         foreignKeys: state.foreignKeys

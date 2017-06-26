@@ -124,7 +124,8 @@ export const MODEL_FORMS = {
   },
   'players': {
     name: {
-      label: 'Name'
+      label: 'Name',
+      validate: FormValidationHelper.validateName
     },
     position: {
       label: 'Position'
@@ -134,7 +135,8 @@ export const MODEL_FORMS = {
     },
     team: {
       label: 'Team',
-      foreignKey: true
+      foreignKey: true,
+      validate: FormValidationHelper.isDefined
     },
     shirt_number: {
       label: 'Number'
